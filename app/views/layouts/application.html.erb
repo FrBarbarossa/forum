@@ -6,11 +6,77 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <style>
+      .circular_image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: blue;
+        /* commented for demo
+        float: left;
+        margin-left: 125px;
+        margin-top: 20px;
+        */
+        
+        /*for demo*/
+        display:inline-block;
+        vertical-align:middle;
+      }
+      .circular_image img{
+        width:100%;
+      }
+    </style>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
 
   <body>
+
+
+
+  <div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Snaky</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+      </ul>
+      <% if !logged_in? %>
+          <%= form_with class: "d-flex m-3", url: "/login", method: :get do |form| %>
+            <%= submit_tag("Войти", class: "nav-link", id: 'btn') %>
+          <% end %> 
+
+        <%= form_with class: "d-flex m-3", url: "/register", method: :get do |form| %>
+          <%= submit_tag("Зарегистрироваться",class: "nav-link", id: 'btn') %>
+        <% end %>
+      <% else %>
+          <a href='/'><img class="circular_image" src="https://yt3.ggpht.com/ytc/AAUvwnjwX6_sRW8W4SG_A6K5uo99u_h1Exkuvpg-klWC=s900-c-k-c0x00ffffff-no-rj" alt="альтернативный текст"></a>
+          
+          <%= form_with class: "d-flex m-3 ", url: "/logout", method: :post do |form| %>
+            <%= submit_tag("Выйти",class: "nav-link", id: 'btn') %>
+          <% end %>
+
+      <% end %>
+
+    </div>
+  </div>
+</nav>
+    </div>
+
+  </div>
+  <div class="row"><div id='out'></div></div>
+  <div class="row">
+
     <%= yield %>
+
+  </div>
+</div>
   </body>
 </html>

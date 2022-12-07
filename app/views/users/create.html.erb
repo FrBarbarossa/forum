@@ -1,0 +1,19 @@
+<h4>Регистрация</h4>
+<%= form_with model: @user do |form| %>
+  <p><%= form.label :login, "Введите логин" %></p>
+  <p><%= form.text_field :login, placeholder: 'login', class: 'form-control', id: 'login' %></p>
+
+  <p><%= form.label :name, "Введите имя (его будут видеть другие пользователи)" %></p>
+  <p><%= form.text_field :name, placeholder: 'name', class: 'form-control', id: 'name' %></p>
+  
+  <p><%= form.label :password, "Введите пароль" %></p>
+  <p><%= form.password_field :password, class: 'form-control', id: 'pass' %></p>
+  
+  <p><%= form.label :password_confirmation, "Повторите пароль" %></p>
+  <p><%= form.password_field :password_confirmation, class: 'form-control', id: 'pass_conf' %></p>
+  
+  <p><%= form.label :email, "Введите e-mail" %></p>
+  
+  <p><%= form.email_field :email, class: 'form-control', id: 'mail' %></p>
+  <p><%= form.submit("Зарегистрироваться", id: 'btn') %></p>
+<% end %>

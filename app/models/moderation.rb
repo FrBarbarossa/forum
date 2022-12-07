@@ -1,0 +1,4 @@
+class Moderation < ApplicationRecord
+
+  end
+  
