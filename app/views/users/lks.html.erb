@@ -1,0 +1,51 @@
+
+    <div class="col">
+        <div class="row">
+            <h1>ЭТО ЛИЧНЫЙ КАБИНЕТ</h1>
+            <% if @account.avatar.attached?%>
+                <%= image_tag @account.avatar, size: "175x200"%>
+            <% else %>
+                <%= image_tag 'avatar_filler.jpg', size: "150x200"%>
+            <% end %>
+        </div>
+        <br>
+        <div class="row">
+        <%= form_with url: '/avatar' do |form| %>
+            <%= form.file_field :avatar %>
+            <br><br>
+            <p><%= form.submit("Загрузить аватар", id: 'btn') %></p>
+        <% end %>
+        </div>
+    </div>
+    <div class="col">
+        <div class="row">
+            <div class="col-md-auto">
+                <h2>Имя пользователя: </h2>
+            </div>
+            <div class="col">
+                <h3><%= @account.name %></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>Статус: </h2>
+            </div>
+            <div class="col">
+                <h3><%= @account.role %></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>Описание: </h2>
+            </div>
+            <div class="col">
+                <% if @account.description %>
+                    <p><%= @account.description %></p>
+                <% else %>
+                    <p>Здесь пока ничего нет</p>
+                <% end %>
+            </div>
+        </div>
+    </div>
+
+  <div class="row">

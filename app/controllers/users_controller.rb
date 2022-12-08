@@ -18,8 +18,9 @@ class UsersController < ApplicationController
       @user = User.new(register_params)
       if @user.valid?
         @user.save
+        @user.create_account!({name: params[:name], role: "User", status: "Active"})
         log_in @user
-        redirect_to '/'
+        redirect_to "/lks?user=#{session[:user_id]}"
       end
     end
 
@@ -33,6 +34,17 @@ class UsersController < ApplicationController
           redirect_to '/'
         end
       end
+    end
+
+    def avatar
+      @account = current_user.account
+      @account.avatar.attach(params[:avatar])
+    end
+
+    def lks
+      @account = current_user.account
+      p @account
+      p @account.avatar.attached?
     end
 
     private
