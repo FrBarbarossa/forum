@@ -25,6 +25,7 @@
                 <% end %>
                 <div id='change_name'></div>
             </div>
+            <div class='col-auto'><%= image_tag 'edit.png', size: "15x15"%></div>
             <div class="col">
                 <h3><%= @account.name %></h3>
             </div>
@@ -45,7 +46,13 @@
                 <% end %>
                 <div id='change_desc'></div>
             </div>
+            <div class='col-auto'>
+                <%= form_with url: '/modal?name=2' do |form| %>
+                        <%= form.submit(type: :image, src: asset_path('edit.png'), height: "20", id: 'btn') %>
+                    <% end %>   
+            </div>
             <div class="col">
+            
                 <% if @account.description %>
                     <p><%= @account.description %></p>
                 <% else %>
