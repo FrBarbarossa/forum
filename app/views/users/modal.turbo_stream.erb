@@ -1,0 +1,5 @@
+<% if params[:name] == '1' %>
+    <%= turbo_stream.update 'change_name', partial: 'name' %>
+<% else %>
+    <%= turbo_stream.update 'change_desc', partial: 'desc' %>
+<% end %>

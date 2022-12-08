@@ -1,7 +1,6 @@
 
-    <div class="col">
+    <div class="col-3">
         <div class="row">
-            <h1>ЭТО ЛИЧНЫЙ КАБИНЕТ</h1>
             <% if @account.avatar.attached?%>
                 <%= image_tag @account.avatar, size: "175x200"%>
             <% else %>
@@ -19,24 +18,32 @@
     </div>
     <div class="col">
         <div class="row">
-            <div class="col-md-auto">
+            <div class="col-5">
                 <h2>Имя пользователя: </h2>
+                <%= form_with url: '/modal?name=1' do |form| %>
+                    <%= form.submit("Изменить", id: 'btn') %>
+                <% end %>
+                <div id='change_name'></div>
             </div>
             <div class="col">
                 <h3><%= @account.name %></h3>
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col-5">
                 <h2>Статус: </h2>
             </div>
-            <div class="col">
+            <div class="col-5">
                 <h3><%= @account.role %></h3>
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col-5">
                 <h2>Описание: </h2>
+                <%= form_with url: '/modal?name=2' do |form| %>
+                    <%= form.submit("Изменить", id: 'btn') %>
+                <% end %>
+                <div id='change_desc'></div>
             </div>
             <div class="col">
                 <% if @account.description %>
@@ -48,4 +55,8 @@
         </div>
     </div>
 
-  <div class="row">
+
+
+
+
+

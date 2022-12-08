@@ -1,0 +1,4 @@
+<%= form_with url: '/description' do |form| %>
+    <%= form.text_area :description, class: 'form-control', value: current_user.account.description  %>
+    <p><%= form.submit("Изменить описание", class: 'form-control', id: 'btn') %></p>
+<% end %>

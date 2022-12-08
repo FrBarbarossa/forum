@@ -36,9 +36,24 @@ class UsersController < ApplicationController
       end
     end
 
+    # Добавить обработку ошибок модели!
     def avatar
       @account = current_user.account
       @account.avatar.attach(params[:avatar])
+      redirect_to "/lks?user=#{session[:user_id]}"
+    end
+
+    # Добавить обработку ошибок модели!
+    def name
+      @account = current_user.account
+      @account.update(name: params[:name])
+      redirect_to "/lks?user=#{session[:user_id]}"
+    end
+
+    def description
+      @account = current_user.account
+      @account.update(description: params[:description])
+      redirect_to "/lks?user=#{session[:user_id]}"
     end
 
     def lks
@@ -46,6 +61,10 @@ class UsersController < ApplicationController
       p @account
       p @account.avatar.attached?
     end
+
+    def modal
+      p params[:name]
+    end  
 
     private
 

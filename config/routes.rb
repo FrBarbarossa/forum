@@ -11,7 +11,11 @@ Rails.application.routes.draw do
 
   get 'lks', to: 'users#lks'
 
-  post "avatar", to: 'users#avatar'
+  post "/avatar", to: 'users#avatar'
+  post "/modal", to: 'users#modal'
+  post "/name", to: 'users#name'
+  post "/description", to: 'users#description'
+
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
