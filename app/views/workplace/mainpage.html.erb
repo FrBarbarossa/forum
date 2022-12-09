@@ -1,1 +1,6 @@
-<h1>ЭТО ГЛАВНАЯ СТРАНИЦА</h1>
+<div class="container" style="border:2px solid #cecece;">
+  <div class="row alert alert-info"><h3 class='text-center'>Основной раздел</h3></div>
+</div>
+<% (1..10).each do |i| %>
+    <%= render partial: 'section_part', locals: {input: i} %> 
+<%end%>

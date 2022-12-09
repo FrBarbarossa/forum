@@ -64,6 +64,7 @@ class UsersController < ApplicationController
 
     def modal
       p params[:name]
+      @account = current_user.account
     end  
 
     private

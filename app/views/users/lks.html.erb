@@ -2,7 +2,7 @@
     <div class="col-3">
         <div class="row">
             <% if @account.avatar.attached?%>
-                <%= image_tag @account.avatar, size: "175x200"%>
+                <%= image_tag @account.avatar,  size: "150x250" %>
             <% else %>
                 <%= image_tag 'avatar_filler.jpg', size: "150x200"%>
             <% end %>
@@ -10,60 +10,44 @@
         <br>
         <div class="row">
         <%= form_with url: '/avatar' do |form| %>
-            <%= form.file_field :avatar %>
+            <%= form.file_field :avatar, class: "form-control" %>
             <br><br>
-            <p><%= form.submit("Загрузить аватар", id: 'btn') %></p>
+            <p><%= form.submit("Загрузить аватар",class: "form-control", id: 'btn') %></p>
         <% end %>
         </div>
     </div>
-    <div class="col">
+    <div class="col  overflow-hidden d-grid gap-6" id='stat_info' >
         <div class="row">
-            <div class="col-5">
+            <div class="col-4">
                 <h2>Имя пользователя: </h2>
-                <%= form_with url: '/modal?name=1' do |form| %>
-                    <%= form.submit("Изменить", id: 'btn') %>
-                <% end %>
-                <div id='change_name'></div>
             </div>
-            <div class='col-auto'><%= image_tag 'edit.png', size: "15x15"%></div>
-            <div class="col">
-                <h3><%= @account.name %></h3>
+            <div class='col-auto', id='name_edit'>
+                <%= render 'name_normal_edit' %>  
+            </div>
+            <div class="col", id="name">
+                <%= render 'name_normal' %>  
             </div>
         </div>
         <div class="row">
-            <div class="col-5">
+            <div class="col-4">
                 <h2>Статус: </h2>
             </div>
-            <div class="col-5">
+            <div class="col-auto">
                 <h3><%= @account.role %></h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-5">
+            <div class="col-4">
                 <h2>Описание: </h2>
-                <%= form_with url: '/modal?name=2' do |form| %>
-                    <%= form.submit("Изменить", id: 'btn') %>
-                <% end %>
                 <div id='change_desc'></div>
             </div>
-            <div class='col-auto'>
-                <%= form_with url: '/modal?name=2' do |form| %>
-                        <%= form.submit(type: :image, src: asset_path('edit.png'), height: "20", id: 'btn') %>
-                    <% end %>   
-            </div>
-            <div class="col">
-            
-                <% if @account.description %>
-                    <p><%= @account.description %></p>
-                <% else %>
-                    <p>Здесь пока ничего нет</p>
-                <% end %>
-            </div>
-        </div>
+          
+                <div class='col-auto' id='desc_edit'>
+                <%= render 'desc_normal_edit' %>  
+
+                </div>
+                <div class="col" id='desc'>
+                    <%= render 'desc_normal' %>  
+                </div>
+        
     </div>
-
-
-
-
-
-

@@ -1,5 +1,14 @@
-<% if params[:name] == '1' %>
-    <%= turbo_stream.update 'change_name', partial: 'name' %>
-<% else %>
-    <%= turbo_stream.update 'change_desc', partial: 'desc' %>
+<% case params[:name]%>
+<% when '1' then %>
+    <%= turbo_stream.update 'name', partial: 'name' %>
+    <%= turbo_stream.update 'name_edit', partial: 'name_cancel' %>
+<% when '2' then %>
+    <%= turbo_stream.update 'desc', partial: 'desc' %>
+    <%= turbo_stream.update 'desc_edit', partial: 'desc_cancel' %>
+<% when '3' then %>
+    <%= turbo_stream.update 'desc', partial: 'desc_normal' %>
+    <%= turbo_stream.update 'desc_edit', partial: 'desc_normal_edit'%>
+<% when '4' then %>
+    <%= turbo_stream.update 'name', partial: 'name_normal' %>
+    <%= turbo_stream.update 'name_edit', partial: 'name_normal_edit'%>
 <% end %>
