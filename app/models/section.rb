@@ -1,4 +1,4 @@
 class Section < ApplicationRecord
-
-  end
+  has_many :topics
+end
   
