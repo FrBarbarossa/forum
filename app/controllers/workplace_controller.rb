@@ -1,6 +1,9 @@
 class WorkplaceController < ApplicationController
     def mainpage
-        # @a = Section.new({title: "Жалобы", description: "Для ваших жалоб еа пользователей/администрацию",status: "general" , type:"opened"})
-        # @a.save
+        @p_sections = Section.where(status: "opened")
+    end
+
+    def section
+        @p_sections = Section.where(status: "opened")
     end
 end

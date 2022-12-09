@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   post "/name", to: 'users#name'
   post "/description", to: 'users#description'
 
+  get "/section", to: 'workplace#section'
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
