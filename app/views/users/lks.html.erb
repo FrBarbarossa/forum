@@ -11,7 +11,7 @@
         <br>
         <div class="row">
         <%= form_with url: '/avatar' do |form| %>
-            <div id='errors'></div>
+            <div id='errors_avatar'></div>
             <%= form.file_field :avatar, class: "form-control" %>
             <br><br>
             <p><%= form.submit("Загрузить аватар",class: "form-control", id: 'btn') %></p>

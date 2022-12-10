@@ -1,5 +1,5 @@
 <%= form_with url: '/name' do |form| %>
-    <div id='errors'></div>
+    <div id='errors_name'></div>
     <%= form.text_field :name, class: 'form-control' %>
     <p><%= form.submit("Изменить имя", class: "form-control" ,id: 'btn') %></p>
 <% end %>

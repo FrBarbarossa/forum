@@ -42,7 +42,7 @@ class UsersController < ApplicationController
       @account.avatar.attach(params[:avatar])
 
       @errors = @account.errors
-      render "error" unless @errors.empty?
+      render("error", locals:{templ: "errors_avatar"}) unless @errors.empty?
       return unless @errors.empty?
 
       redirect_to "/lks?user=#{session[:user_id]}"
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
       
 
       @errors = @account.errors
-      render "error" unless @errors.empty?
+      render("error", locals:{templ: "errors_name"}) unless @errors.empty?
       return unless @errors.empty?
 
       redirect_to "/lks?user=#{session[:user_id]}"
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
       @account.update(description: params[:description])
       
       @errors = @account.errors
-      render "error" unless @errors.empty?
+      render("error", locals:{templ: "errors_desc"}) unless @errors.empty?
       return unless @errors.empty?
 
       redirect_to "/lks?user=#{session[:user_id]}"
