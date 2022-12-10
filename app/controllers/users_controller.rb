@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :logged_only, only: [:lks, :logout, :avatar, :description, :name, :modal]
+  before_action :unlogged_only, only: [:login, :register, :signin, :create]
     def create
     end
 
@@ -13,21 +15,17 @@ class UsersController < ApplicationController
     end
 
     def register
-      # redirect_to "/?id=#{3}"
-      # p "!!!!!!!!!!!!!!!"
       @user = User.new(register_params)
-      if @user.valid?
-        @user.save
-        @user.create_account!({name: params[:name], role: "User", status: "Active"})
-        log_in @user
-        redirect_to "/lks?user=#{session[:user_id]}"
-      end
+      @user.build_account({name: params[:name], role: "User", status: "Active"})
+      return unless @user.valid?
+      return unless @user.account.valid?
+      @user.save
+      log_in @user
+      redirect_to "/lks?user=#{session[:user_id]}"
     end
 
     def login
-      p login_params
       @user = User.find_by(login: login_params[:login])
-      p @user
       if @user
         if @user.authenticate(login_params[:password])
           log_in @user
@@ -55,7 +53,7 @@ class UsersController < ApplicationController
       
 
       @errors = @account.errors
-      render("error", locals:{templ: "errors_name"}) unless @errors.empty?
+      render("error", locals:{ templ: "errors_name" }) unless @errors.empty?
       return unless @errors.empty?
 
       redirect_to "/lks?user=#{session[:user_id]}"

@@ -1,7 +1,12 @@
-<% unless @user.valid? %></h1>
+<% unless @user.valid? && @user.account.valid? %></h1>
     <div class='alert alert-info'>
     <% @user.errors.full_messages.each do |error|%>
         <p><%= error %></p>
     <% end %>
+    <% unless @user.account.valid?%>
+        <% @user.account.errors.full_messages.each do |error| %>
+            <p><%= error %></p>
+        <% end %>
+    <%end%>
     </div>
 <%end%>

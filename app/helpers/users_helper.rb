@@ -16,4 +16,14 @@ module UsersHelper
     @current_user = nil
   end
 
+  def logged_only
+    redirect_to '/', notice: "Вы должны войти в систему для просмотра этой страницы" unless logged_in?
+    # render("sessions/login_error") unless logged_in?
+  end
+
+  def unlogged_only
+    redirect_to '/', notice: "Вы уже вошли в систему" if logged_in?
+    # render("sessions/login_error") unless logged_in?
+  end
+
 end
