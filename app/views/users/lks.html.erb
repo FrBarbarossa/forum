@@ -2,6 +2,7 @@
     <div class="col-3">
         <div class="row">
             <% if @account.avatar.attached?%>
+                
                 <%= image_tag @account.avatar,  size: "150x250" %>
             <% else %>
                 <%= image_tag 'avatar_filler.jpg', size: "150x200"%>
@@ -10,6 +11,7 @@
         <br>
         <div class="row">
         <%= form_with url: '/avatar' do |form| %>
+            <div id='errors'></div>
             <%= form.file_field :avatar, class: "form-control" %>
             <br><br>
             <p><%= form.submit("Загрузить аватар",class: "form-control", id: 'btn') %></p>

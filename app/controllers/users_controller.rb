@@ -40,6 +40,11 @@ class UsersController < ApplicationController
     def avatar
       @account = current_user.account
       @account.avatar.attach(params[:avatar])
+
+      @errors = @account.errors
+      render "error" unless @errors.empty?
+      return unless @errors.empty?
+
       redirect_to "/lks?user=#{session[:user_id]}"
     end
 
@@ -47,12 +52,24 @@ class UsersController < ApplicationController
     def name
       @account = current_user.account
       @account.update(name: params[:name])
+      
+
+      @errors = @account.errors
+      render "error" unless @errors.empty?
+      return unless @errors.empty?
+
       redirect_to "/lks?user=#{session[:user_id]}"
     end
 
+    # Добавить обработку ошибок модели!
     def description
       @account = current_user.account
       @account.update(description: params[:description])
+      
+      @errors = @account.errors
+      render "error" unless @errors.empty?
+      return unless @errors.empty?
+
       redirect_to "/lks?user=#{session[:user_id]}"
     end
 
