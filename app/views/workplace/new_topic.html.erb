@@ -1,0 +1,6 @@
+<h1>It just works!</h1>
+<%= form_with url: '/', method: :get do |form| %>  <div class="field">
+    <%= form.label :content %>
+    <%= form.rich_text_area :content %>
+  </div>
+<% end %>

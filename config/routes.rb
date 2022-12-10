@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   post "/name", to: 'users#name'
   post "/description", to: 'users#description'
 
-  get "/section", to: 'workplace#section'
-
+  get "/section/:id", to: 'workplace#section'
+  get "/section/:id/new_topic", to: 'workplace#new_topic'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Defines the root path route ("/")

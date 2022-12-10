@@ -7,6 +7,12 @@ class WorkplaceController < ApplicationController
     end
 
     def section
+        @c_section = Topic.where(section_id: params[:id])
         @p_sections = Section.where(status: "opened")
+        p request.original_url
+    end
+
+    def new_topic
+        p params
     end
 end

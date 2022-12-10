@@ -1,1 +1,4 @@
 <h1>Здесь много тредов</h1>
+<%= form_with url: request.original_url+"/new_topic", method: :get do |form| %>
+    <p><%= form.submit("Новый топик",class: "form-control", id: 'btn') %></p>
+<% end %>
