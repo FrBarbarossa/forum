@@ -57,7 +57,7 @@
       <% else %>
           <a href=<%= "/lks?user=#{session[:user_id]}" %>>
           <% if current_user.account.avatar.attached? %>
-            <%= image_tag current_user.account.avatar, class: "circular_image"%>
+            <%= image_tag @user.account.avatar, class: "circular_image"%>
           <% else %>
             <%= image_tag 'avatar_filler.jpg', class: "circular_image"%>
           <%end%>
@@ -77,13 +77,15 @@
 
   <div class="container">
   
-  <div class="row"><div id='out'>
-    <% flash.each do |type, msg| %>
-    <div class='alert alert-danger'>
+  <div class="row">
+<div id="out"></div>
+  <% flash.each do |type, msg| %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <%= msg %>
-    </div>
-<% end %>
-  </div></div>
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+  </div>
+  <% end %>
+  </div>
   
   <div class="row">
 

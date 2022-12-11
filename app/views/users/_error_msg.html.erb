@@ -1,5 +1,6 @@
-<div class='alert alert-danger'>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
     <% @errors.full_messages.each do |error|%>
-        <p><%= error %></p>
+    <p><%= error %></p>
     <% end %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
 </div>
