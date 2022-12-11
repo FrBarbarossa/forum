@@ -1,6 +1,10 @@
 class Account < ApplicationRecord
     has_one_attached :avatar, service: :local
     belongs_to :user
+    has_many :topics
+    has_many :messages
+    has_many :moderations
+    # Добавить связи для новых таблиц лайков и просмотров
 
     validates :description, length: {
       maximum: 200, 

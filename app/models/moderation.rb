@@ -1,4 +1,5 @@
 class Moderation < ApplicationRecord
-
-  end
+  belongs_to :account
+  belongs_to :section
+end
   

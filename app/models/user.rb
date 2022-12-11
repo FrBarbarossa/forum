@@ -2,6 +2,7 @@ class User < ApplicationRecord
     include ActiveModel::SecurePassword
     extend ActiveModel::Translation
     has_secure_password
+    
     has_one :account
     
 

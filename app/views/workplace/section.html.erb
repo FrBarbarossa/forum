@@ -1,4 +1,4 @@
-<h1><%= @c_section.first.section.title %></h1>
+<h1><%= Section.find_by(id: params[:id]).title %></h1>
 
 <% if logged_in? %>
     <%= form_with url: request.original_url+"/new_topic", method: :get do |form| %>
