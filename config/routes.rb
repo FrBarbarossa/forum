@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   get "/section/:id", to: 'workplace#section'
   get "/section/:id/new_topic", to: 'workplace#new_topic'
 
+  post "/section/:id/new_topic", to: 'workplace#create_topic'
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Defines the root path route ("/")
   # root "articles#index"

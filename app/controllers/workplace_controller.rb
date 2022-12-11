@@ -13,6 +13,17 @@ class WorkplaceController < ApplicationController
     end
 
     def new_topic
-        p params
+        p current_account.id
     end
+
+    def create_topic
+        @topic = Topic.new({title: params[:title], section_id: params[:id], account_id: current_account.id})
+        @message = @topic.messages.build({account_id: current_account.id, content: params[:content]})
+        
+        return unless @topic.valid?
+        return unless @message.valid?
+
+        @topic.save
+    end
+
 end
