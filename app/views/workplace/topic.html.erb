@@ -1,3 +1,4 @@
+<h1><%= @messages.last.topic.title %></h1>
 <div class="container overflow-hidden d-grid gap-2">
     <% @messages.each do |msg| %>
         <%= render partial: 'message_part', locals: {input: msg} %>

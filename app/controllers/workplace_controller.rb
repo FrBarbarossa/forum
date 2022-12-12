@@ -1,4 +1,7 @@
 class WorkplaceController < ApplicationController
+    before_action :logged_only, only: [:create_topic, :new_topic, :new_message]
+    before_action :section_access_check, only: [:section, :topic, :create_topic, :new_message]
+
     def mainpage
         @p_sections = Section.eager_load({topics: [:messages]}).where(status: "opened")
         p @p_sections.first.topics
@@ -14,6 +17,7 @@ class WorkplaceController < ApplicationController
         p current_account.id
     end
 
+    # Добавить валидации!
     def new_message
         @message = Message.new({ account_id: current_account.id, content: params[:content], topic_id: params[:topic_id]})
         @message.save
