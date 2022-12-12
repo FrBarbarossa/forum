@@ -18,8 +18,11 @@ Rails.application.routes.draw do
 
   get "/section/:id", to: 'workplace#section'
   get "/section/:id/new_topic", to: 'workplace#new_topic'
+  get "/section/:id/new_topic", to: 'workplace#new_topic'
+  get "/section/:id/topic/:topic_id", to: 'workplace#topic'
 
   post "/section/:id/new_topic", to: 'workplace#create_topic'
+  post "/section/:id/topic/:topic_id/new_message", to: "workplace#new_message"
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

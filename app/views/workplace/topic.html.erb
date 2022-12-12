@@ -1,0 +1,17 @@
+<div class="container overflow-hidden d-grid gap-2">
+    <% @messages.each do |msg| %>
+        <%= render partial: 'message_part', locals: {input: msg} %>
+    <% end %>
+</div>
+
+
+
+<div class="container overflow-hidden d-grid gap-2 p-5">
+    <%= form_with url: request.original_url+"/new_message", method: :post do |form| %>
+    <div class="field">
+        <%= form.rich_text_area :content %>
+        <br/>
+        <%= form.submit("Опубликовать сообщение", class: "btn btn-primary form-control", id: 'btn') %>
+    </div>
+    <% end %>
+</div>
