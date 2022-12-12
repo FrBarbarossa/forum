@@ -1,6 +1,6 @@
 <h1><%= Section.find_by(id: params[:id]).title %></h1>
 
-<% if logged_in? %>
+<% if session[:user_id] %>
     <%= form_with url: request.original_url+"/new_topic", method: :get do |form| %>
         <p><%= form.submit("Новый топик", class: "btn btn-primary form-control", id: 'btn') %></p>
     <% end %>
