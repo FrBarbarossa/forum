@@ -80,3 +80,4 @@ group :test do
 end
 
 gem 'email_validator'
+gem 'rmagick'
