@@ -6,11 +6,92 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <style>
+      .circular_image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: blue;
+        /* commented for demo
+        float: left;
+        margin-left: 125px;
+        margin-top: 20px;
+        */
+        
+        /*for demo*/
+        display:inline-block;
+        vertical-align:middle;
+      }
+      .circular_image img{
+        width:100%;
+      }
+    </style>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-  </head>
+    
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+    
+    </head>
 
   <body>
+      <nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Snaky</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+      </ul>
+      <% if !logged_in? %>
+          <%= form_with class: "d-flex m-3", url: "/login", method: :get do |form| %>
+            <%= submit_tag("Войти", class: "nav-link", id: 'btn') %>
+          <% end %> 
+
+        <%= form_with class: "d-flex m-3", url: "/register", method: :get do |form| %>
+          <%= submit_tag("Зарегистрироваться",class: "nav-link", id: 'btn') %>
+        <% end %>
+      <% else %>
+          <a href=<%= "/lks?user=#{session[:user_id]}" %>>
+          <% if current_user.account.avatar.attached? %>
+            <%= image_tag @user.account.avatar, class: "circular_image"%>
+          <% else %>
+            <%= image_tag 'avatar_filler.jpg', class: "circular_image"%>
+          <%end%>
+          </a>
+          
+          <%= form_with class: "d-flex m-3 ", url: "/logout", method: :post do |form| %>
+            <%= submit_tag("Выйти",class: "form-control", id: 'btn') %>
+          <% end %>
+
+      <% end %>
+
+    </div>
+  </div>
+</nav>
+
+
+
+  <div class="container">
+  
+  <div class="row">
+<div id="out"></div>
+  <% flash.each do |type, msg| %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= msg %>
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+  </div>
+  <% end %>
+  </div>
+  
+  <div class="row">
+
     <%= yield %>
+
+  </div>
+</div>
   </body>
 </html>

@@ -1,0 +1,39 @@
+<div class="row" style="border:1px solid #cecece;">
+    <div class="col-auto">
+        <%= image_tag 'debate', size: "40x40" %>
+    </div>
+    <div class="col">
+        <div class='row'>
+            <h4><a class="link-dark" href=<%= "/section/#{input.id}" %> style="text-decoration:none;" >
+                <%= input.title %>
+            </a></h4>
+        </div>
+        <div class='row'>
+            <div class="col-auto">
+                <div class="row">
+                    <div class="col-auto">
+                        <h5>Темы:</h5>
+                    </div>
+                    <div class="col-auto">
+                        <h5 class='fw-weight-bold'>
+                            <%= input.topics.size %>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="row">
+                    <div class="col-auto">
+                        <h5>Сообщения:</h5>
+                    </div>
+                    <div class="col-auto">
+                        <h5 class='fw-weight-bold'>
+                            <%= input.topics.map{|top| top.messages.size }.sum %>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

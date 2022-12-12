@@ -1,0 +1,9 @@
+<div id='out'></div>
+<h1>Создать топик</h1>
+<%= form_with url: request.original_url, method: :post do |form| %>  
+  <%= form.text_field :title, placeholder: 'Название топика', class: 'form-control', id: 'name' %>
+  <%= form.rich_text_area :content %>
+  <br>
+  <%= form.submit("Создать", class: 'form-control btn btn-primary', id: 'btn') %>
+  
+<% end %>

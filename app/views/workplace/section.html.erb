@@ -1,0 +1,17 @@
+<h1><%= Section.find_by(id: params[:id]).title %></h1>
+
+<% if session[:user_id] %>
+    <%= form_with url: request.original_url+"/new_topic", method: :get do |form| %>
+        <p><%= form.submit("Новый топик", class: "btn btn-primary form-control", id: 'btn') %></p>
+    <% end %>
+<% else %>
+        <p><button class="btn btn-primary form-control" disabled >Войдите, чтобы создать топик</button></p>
+<% end %>
+
+  <div class="container overflow-hidden d-grid gap-2">
+    <% @c_section.each do |i| %>
+        <% if i.status == "opened" %>
+            <%= render partial: 'topic_part', locals: {input: i} %>
+        <%end%> 
+    <%end%>
+  </div>

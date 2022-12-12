@@ -1,0 +1,21 @@
+<h1><%= @messages.last.topic.title %></h1>
+<div class="container overflow-hidden d-grid gap-2">
+    <% @messages.each do |msg| %>
+        <%= render partial: 'message_part', locals: {input: msg} %>
+    <% end %>
+</div>
+
+<% if session[:user_id] %>
+    <div class="container overflow-hidden d-grid gap-2 p-5">
+    <div id='msg_error'> </div>
+        <%= form_with url: request.original_url+"/new_message", method: :post do |form| %>
+        <div class="field">
+            <%= form.rich_text_area :content %>
+            <br/>
+            <%= form.submit("Опубликовать сообщение", class: "btn btn-primary form-control", id: 'btn') %>
+        </div>
+        <% end %>
+    </div>
+<% else %>
+    <p class='p-5'><button class="btn btn-primary form-control " disabled >Войдите, чтобы написать сообщение</button></p>
+<% end %>

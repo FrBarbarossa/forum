@@ -1,0 +1,95 @@
+# frozen_string_literal: true
+
+# Helper for access and auth controll
+module UsersHelper
+  ACCESS = {
+    'visible' => %w[User Moderator Admin],
+    'opened' => %w[User Moderator Admin],
+    'hidden' => %w[Moderator Admin],
+    'deleted' => ['Admin']
+  }.freeze
+
+  NOBODY = Account.new(id: -1, role: 'nobody')
+
+  NOT_EXIST_MSG = 'Страница не существует, или у вас недостаточно прав для её просмотра'
+
+  def log_in(usr)
+    session[:user_id] = usr.id
+  end
+
+  def current_user
+    @user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  end
+
+  def current_account
+    @account ||= User.find_by(id: session[:user_id]).account if session[:user_id]
+  end
+
+  def logged_in?
+    !current_user.nil?
+  end
+
+  def log_out
+    session.delete(:user_id)
+    @current_user = nil
+  end
+
+  def logged_only
+    redirect_to '/', notice: 'Вы должны войти в систему для просмотра этой страницы' unless logged_in?
+    # render("sessions/login_error") unless logged_in?
+  end
+
+  def unlogged_only
+    redirect_to '/', notice: 'Вы уже вошли в систему' if logged_in?
+    # render("sessions/login_error") unless logged_in?
+  end
+
+  def section_exist_check(sec)
+    redirect_to '/', notice: NOT_EXIST_MSG if sec.empty?
+    sec.empty?
+  end
+
+  def section_visibility_check(sec)
+    account = session[:user_id] ? current_account : NOBODY
+    statement = ACCESS[sec.first.status].include?(account.role)
+    redirect_to '/', notice: NOT_EXIST_MSG unless statement
+    statement
+  end
+
+  def section_moderation_check(sec)
+    account = session[:user_id] ? current_account : NOBODY
+    statement = (account.role == 'Admin') || !sec.first.moderations.where(account_id: account.id).empty?
+    redirect_to '/', notice: NOT_EXIST_MSG unless statement
+    statement
+  end
+
+  def section_access_check
+    @current_section = Section.eager_load(:moderations).where(id: params[:id])
+    return if section_exist_check(@current_section)
+    return if @current_section.first.status == 'opened'
+    return unless section_visibility_check(@current_section)
+    return unless section_moderation_check(@current_section)
+  end
+
+  def topic_exist_check(top)
+    redirect_to '/', notice: NOT_EXIST_MSG if top.empty?
+    top.empty?
+  end
+
+  def topic_visibility_check(top)
+    account = session[:user_id] ? current_account : NOBODY
+    statement = ACCESS[top.first.status].include?(account.role)
+    p ACCESS[top.first.status]
+    p account.role
+    redirect_to '/', notice: NOT_EXIST_MSG unless statement
+    statement
+  end
+
+  def topic_access_check
+    @current_topic = Topic.eager_load([{ section: :moderations }]).where(id: params[:topic_id])
+    return if topic_exist_check(@current_topic)
+    return if @current_topic.first.status == 'opened'
+    return unless topic_visibility_check(@current_topic)
+    return unless section_moderation_check(Section.eager_load(:moderations).where(id: params[:id]))
+  end
+end
