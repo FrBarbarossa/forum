@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_09_221500) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_13_133846) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,6 +63,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_221500) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "messages_id"
+    t.bigint "accounts_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["accounts_id"], name: "index_likes_on_accounts_id"
+    t.index ["messages_id"], name: "index_likes_on_messages_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.string "status", default: "visible"
     t.bigint "account_id"
@@ -104,6 +113,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_221500) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "views", force: :cascade do |t|
+    t.bigint "topic_id"
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_views_on_account_id"
+    t.index ["topic_id"], name: "index_views_on_topic_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
