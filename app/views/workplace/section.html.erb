@@ -1,3 +1,6 @@
+<%= @hidder = section_moderation_check_without_redirection%>
+
+
 <h1><%= Section.find_by(id: params[:id]).title %></h1>
 
 <% if session[:user_id] %>
@@ -10,7 +13,7 @@
 
   <div class="container overflow-hidden d-grid gap-2">
     <% @c_section.each do |i| %>
-        <% if i.status == "opened" %>
+        <% if i.status == "opened"  || @hidder%>
             <%= render partial: 'topic_part', locals: {input: i} %>
         <%end%> 
     <%end%>

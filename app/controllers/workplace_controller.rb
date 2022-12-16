@@ -8,13 +8,13 @@ class WorkplaceController < ApplicationController
 
   def mainpage
     @p_sections = Section.eager_load({ topics: [:messages] }).where(status: 'opened')
-    p @p_sections.first.topics
   end
 
   def section
     @c_section = Topic.eager_load({ messages: [:account] },
                                   :account).where(section_id: params[:id]).reorder('messages.created_at DESC')
-    p @c_section.first
+    p "!!!!!!!!!!!!!!!!!!!!!"
+    p section_moderation_check_without_redirection
   end
 
   def new_topic
@@ -44,6 +44,13 @@ class WorkplaceController < ApplicationController
 
   def topic
     @messages = Message.eager_load(%i[account topic]).where(topic_id: params[:topic_id]).with_rich_text_content
+    add_view
+  end
+
+  private
+
+  def add_view
+    return unless session[:user_id]
     statement = View.where(topic_id: params[:topic_id]).where(account_id: current_account.id).empty?
     View.create!({ account_id: current_account.id, topic_id: params[:topic_id] }) if session[:user_id] && statement
   end

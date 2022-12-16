@@ -1,4 +1,8 @@
-<div class="row" style="border:1px solid #cecece;">
+<% if input.status == "hidden" %>
+    <div class="row bg-warning" style="border:1px solid #cecece;">
+<% else %>
+    <div class="row" style="border:1px solid #cecece;">
+<% end %>
     <div class="col-auto p-3" >
         <%= image_tag input.account.avatar, class: "circular_image mx-auto"%>
     </div>
@@ -56,5 +60,17 @@
                     <%= input.messages.last.account.created_at %>
                 </div>
             </div>
+
+            <% if @hidder && input.status != "hidden" %>
+                <%= form_with url: "/hide/#{input.id}", method: :post do |form| %>
+                    <%= form.submit("Скрыть", class: "btn btn-warning", id: 'btn') %>
+                <% end %>
+            <% end %>
+
+            <% if input.status == "hidden" %>
+                <%= form_with url: "/show/#{input.id}", method: :post do |form| %>
+                    <%= form.submit("Показать", class: "btn btn-success", id: 'btn') %>
+                <% end %>
+            <% end %>
         </div>
 </div>
