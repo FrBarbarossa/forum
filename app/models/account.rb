@@ -4,6 +4,7 @@ class Account < ApplicationRecord
     has_many :topics
     has_many :messages
     has_many :moderations
+    has_many :likes
     # Добавить связи для новых таблиц лайков и просмотров
 
     validates :description, length: {

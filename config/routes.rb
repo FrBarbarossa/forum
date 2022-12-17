@@ -40,6 +40,9 @@ Rails.application.routes.draw do
   post '/section/:id/topic/:topic_id/delete_msg/:msg_id', to: 'admin#delete_msg'
   post '/section/:id/topic/:topic_id/restore_msg/:msg_id', to: 'admin#restore_msg'
 
+  post "/section/:id/topic/:topic_id/like_msg/:msg_id", to: 'workplace#like_msg'
+  post "/section/:id/topic/:topic_id/unlike_msg/:msg_id", to: 'workplace#unlike_msg'
+
 
 
 

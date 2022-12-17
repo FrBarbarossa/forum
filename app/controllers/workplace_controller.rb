@@ -43,8 +43,22 @@ class WorkplaceController < ApplicationController
   end
 
   def topic
-    @messages = Message.eager_load(%i[account topic]).where(topic_id: params[:topic_id]).order('messages.created_at').with_rich_text_content
+    @messages = Message.eager_load(%i[account topic
+                                      likes]).where(topic_id: params[:topic_id])
+                       .order('messages.created_at').with_rich_text_content
     add_view
+  end
+
+  def like_msg
+    Like.create(account_id: current_account.id, message_id: params[:msg_id])
+    @message = Message.eager_load(%i[account likes]).find_by(id: params[:msg_id])
+    render 'like'
+  end
+
+  def unlike_msg
+    Like.find_by(account_id: current_account.id, message_id: params[:msg_id]).destroy
+    @message = Message.eager_load(%i[account likes]).find_by(id: params[:msg_id])
+    render 'like'
   end
 
   private
