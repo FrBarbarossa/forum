@@ -1,11 +1,19 @@
+<% @hidder = section_moderation_check_without_redirection %>
+<% @deleter = session[:role] == 'Admin'%>
+
 <h1><%= @messages.last.topic.title %></h1>
 <div class="container overflow-hidden d-grid gap-2">
     <% @messages.each do |msg| %>
-        <%= render partial: 'message_part', locals: {input: msg} %>
+        <% if msg.status == "visible"  || @hidder && msg.status != "deleted" %>
+            <%= render partial: 'message_part', locals: {input: msg} %>
+        <% end %>
+        <% if msg.status == "deleted" && @deleter%>
+            <%= render partial: 'message_part', locals: {input: msg} %>
+        <%end%> 
     <% end %>
 </div>
 
-<% if session[:user_id] %>
+<% if session[:user_id] && !@messages.last.topic.closed || @hidder%>
     <div class="container overflow-hidden d-grid gap-2 p-5">
     <div id='msg_error'> </div>
         <%= form_with url: request.original_url+"/new_message", method: :post do |form| %>
@@ -16,6 +24,12 @@
         </div>
         <% end %>
     </div>
+<% elsif @messages.last.topic.closed %>
+    <p class='p-5'><button class="btn btn-primary form-control " disabled >Топик закрыт для написания сообщений
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+        </svg></button>
+    </p>
 <% else %>
     <p class='p-5'><button class="btn btn-primary form-control " disabled >Войдите, чтобы написать сообщение</button></p>
 <% end %>

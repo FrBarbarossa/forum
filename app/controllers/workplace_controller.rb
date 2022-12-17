@@ -43,7 +43,7 @@ class WorkplaceController < ApplicationController
   end
 
   def topic
-    @messages = Message.eager_load(%i[account topic]).where(topic_id: params[:topic_id]).with_rich_text_content
+    @messages = Message.eager_load(%i[account topic]).where(topic_id: params[:topic_id]).order('messages.created_at').with_rich_text_content
     add_view
   end
 

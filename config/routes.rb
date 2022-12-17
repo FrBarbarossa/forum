@@ -28,8 +28,20 @@ Rails.application.routes.draw do
   post '/section/:id/show/:topic_id', to: 'admin#show_topic'
   post '/section/:id/delete/:topic_id', to: 'admin#delete_topic'
   post '/section/:id/restore/:topic_id', to: 'admin#restore_topic'
+
   post '/section/:id/pin/:topic_id', to: 'admin#pin_topic'
   post '/section/:id/unpin/:topic_id', to: 'admin#unpin_topic'
+
+  post '/section/:id/open/:topic_id', to: 'admin#open_topic'
+  post '/section/:id/close/:topic_id', to: 'admin#close_topic'
+
+  post '/section/:id/topic/:topic_id/hide_msg/:msg_id', to: 'admin#hide_msg'
+  post '/section/:id/topic/:topic_id/show_msg/:msg_id', to: 'admin#show_msg'
+  post '/section/:id/topic/:topic_id/delete_msg/:msg_id', to: 'admin#delete_msg'
+  post '/section/:id/topic/:topic_id/restore_msg/:msg_id', to: 'admin#restore_msg'
+
+
+
 
 
 

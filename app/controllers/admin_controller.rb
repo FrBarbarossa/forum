@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   before_action :section_moderation_check
   before_action :topic_visibility_check
-  before_action :admin_only, only: [:delete_topic, :restore_topic]
+  before_action :admin_only, only: [:delete_topic, :restore_topic, :delete_msg, :restore_msg]
 
   def hide_topic
     topic = Topic.find_by(id: params[:topic_id])
@@ -36,6 +36,42 @@ class AdminController < ApplicationController
   def unpin_topic
     topic = Topic.find_by(id: params[:topic_id])
     topic.update(priority: "normal")
+    redirect_to request.referrer
+  end
+
+  def open_topic
+    topic = Topic.find_by(id: params[:topic_id])
+    topic.update(closed: false)
+    redirect_to request.referrer
+  end
+
+  def close_topic
+    topic = Topic.find_by(id: params[:topic_id])
+    topic.update(closed: true)
+    redirect_to request.referrer    
+  end
+
+  def hide_msg
+    message = Message.find_by(id: params[:msg_id])
+    message.update(status: "hidden")
+    redirect_to request.referrer
+  end
+
+  def show_msg
+    message = Message.find_by(id: params[:msg_id])
+    message.update(status: "visible")
+    redirect_to request.referrer
+  end
+
+  def delete_msg
+    message = Message.find_by(id: params[:msg_id])
+    message.update(status: "deleted")
+    redirect_to request.referrer
+  end
+
+  def restore_msg
+    message = Message.find_by(id: params[:msg_id])
+    message.update(status: "visible")
     redirect_to request.referrer
   end
 
