@@ -26,4 +26,17 @@ class AdminController < ApplicationController
     topic.update(status: "opened")
     redirect_to request.referrer
   end
+
+  def pin_topic
+    topic = Topic.find_by(id: params[:topic_id])
+    topic.update(priority: "important")
+    redirect_to request.referrer
+  end
+
+  def unpin_topic
+    topic = Topic.find_by(id: params[:topic_id])
+    topic.update(priority: "normal")
+    redirect_to request.referrer
+  end
+
 end

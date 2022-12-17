@@ -2,6 +2,8 @@
 
 # Class for mainpages
 class WorkplaceController < ApplicationController
+  include WorkplaceHelper
+
   before_action :logged_only, only: %i[create_topic new_topic new_message]
   before_action :section_access_check, only: %i[section topic create_topic new_message]
   before_action :topic_access_check, only: %i[topic new_message]
@@ -12,14 +14,14 @@ class WorkplaceController < ApplicationController
 
   def section
     @c_section = Topic.eager_load({ messages: [:account] },
-                                  :account).where(section_id: params[:id]).reorder('messages.created_at DESC')
+                                  :account).where(section_id: params[:id]).in_order_of(:priority, SORT_PRIORITY)
+                      .order('messages.created_at DESC')
   end
 
   def new_topic
     p current_account.id
   end
 
-  # Добавить валидации!
   def new_message
     @message = Message.new({ account_id: current_account.id, content: params[:content],
                              topic_id: params[:topic_id] })
@@ -49,6 +51,7 @@ class WorkplaceController < ApplicationController
 
   def add_view
     return unless session[:user_id]
+
     statement = View.where(topic_id: params[:topic_id]).where(account_id: current_account.id).empty?
     View.create!({ account_id: current_account.id, topic_id: params[:topic_id] }) if session[:user_id] && statement
   end

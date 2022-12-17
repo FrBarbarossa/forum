@@ -6,13 +6,17 @@
     <div class="row" style="border:1px solid #cecece;">
 <% end %>
     <div class="col-auto p-3" >
-        <%= image_tag input.account.avatar, class: "circular_image mx-auto"%>
+          <% if input.account.avatar.attached? %>
+            <%= image_tag input.account.avatar, class: "circular_image mx-auto"%>
+          <% else %>
+            <%= image_tag 'avatar_filler.jpg', class: "circular_image"%>
+          <%end%>
     </div>
     <div class="col p-2">
         <div class="row">
             <% if input.priority == "important" %>
                 <div class="col-auto">
-                    <h1>ВАЖНО!!!<h1>
+                    <div class='bg-danger p-1 text-white'>Важно</div>
                 </div>
             <% end %>
             <div class="col">
@@ -95,11 +99,11 @@
             <div class="row p-1">
                 <div class="col-auto">
                     <% if @hidder && input.priority == "normal"%>
-                        <%= form_with url: "/section/#{params[:id]}/restore/#{input.id}", method: :post do |form| %>
-                            <%= form.submit("Закрепить", class: "btn bg-info text-dark bg-opacity-50", id: 'btn') %>
+                        <%= form_with url: "/section/#{params[:id]}/pin/#{input.id}", method: :post do |form| %>
+                            <%= form.submit("Закрепить", class: "btn btn-primary", id: 'btn') %>
                         <% end %>               
                     <% elsif @hidder && input.priority == "important" %>
-                        <%= form_with url: "/section/#{params[:id]}/restore/#{input.id}", method: :post do |form| %>
+                        <%= form_with url: "/section/#{params[:id]}/unpin/#{input.id}", method: :post do |form| %>
                             <%= form.submit("Открепить", class: "btn bg-info text-dark bg-opacity-50", id: 'btn') %>
                         <% end %>    
                     <% end %>     

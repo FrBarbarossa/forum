@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   post '/section/:id/show/:topic_id', to: 'admin#show_topic'
   post '/section/:id/delete/:topic_id', to: 'admin#delete_topic'
   post '/section/:id/restore/:topic_id', to: 'admin#restore_topic'
+  post '/section/:id/pin/:topic_id', to: 'admin#pin_topic'
+  post '/section/:id/unpin/:topic_id', to: 'admin#unpin_topic'
+
 
 
 
