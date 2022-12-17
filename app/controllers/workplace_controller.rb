@@ -13,8 +13,6 @@ class WorkplaceController < ApplicationController
   def section
     @c_section = Topic.eager_load({ messages: [:account] },
                                   :account).where(section_id: params[:id]).reorder('messages.created_at DESC')
-    p "!!!!!!!!!!!!!!!!!!!!!"
-    p section_moderation_check_without_redirection
   end
 
   def new_topic

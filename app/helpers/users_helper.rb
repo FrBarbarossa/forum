@@ -5,6 +5,7 @@ module UsersHelper
   ACCESS = {
     'visible' => %w[User Moderator Admin],
     'opened' => %w[User Moderator Admin],
+    'closed' => %w[User Moderator Admin],
     'hidden' => %w[Moderator Admin],
     'deleted' => ['Admin']
   }.freeze
@@ -46,6 +47,10 @@ module UsersHelper
     # render("sessions/login_error") unless logged_in?
   end
 
+  def admin_only
+    redirect_to '/', notice: "У вас недостаточно прав для совершения этого действия" unless session[:role] == "Admin"
+  end
+
   def section_exist_check(sec)
     redirect_to '/', notice: NOT_EXIST_MSG if sec.empty?
     sec.empty?
@@ -58,7 +63,7 @@ module UsersHelper
     statement
   end
 
-  def section_moderation_check(sec)
+  def section_moderation_check(sec = Section.eager_load(:moderations).where(id: params[:id]))
     account = session[:user_id] ? current_account : NOBODY
     statement = (account.role == 'Admin') || !sec.first.moderations.where(account_id: account.id).empty?
     redirect_to '/', notice: NOT_EXIST_MSG unless statement
@@ -68,6 +73,12 @@ module UsersHelper
   def section_moderation_check_without_redirection(sec = Section.eager_load(:moderations).where(id: params[:id]))
     account = session[:user_id] ? current_account : NOBODY
     statement = (account.role == 'Admin') || !sec.first.moderations.where(account_id: account.id).empty?
+    statement
+  end
+  
+  def topic_visibility_check_without_redirection(top = Topic.where(id: params[:topic_id]))
+    account = session[:user_id] ? session[:role] : 'nobody'
+    statement = ACCESS[top.first.status].include?(account)
     statement
   end
 
@@ -84,7 +95,7 @@ module UsersHelper
     top.empty?
   end
 
-  def topic_visibility_check(top)
+  def topic_visibility_check(top = Topic.where(id: params[:topic_id]))
     account = session[:user_id] ? session[:role] : 'nobody'
     statement = ACCESS[top.first.status].include?(account)
     redirect_to '/', notice: NOT_EXIST_MSG unless statement

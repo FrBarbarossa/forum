@@ -24,8 +24,11 @@ Rails.application.routes.draw do
   post "/section/:id/new_topic", to: 'workplace#create_topic'
   post "/section/:id/topic/:topic_id/new_message", to: "workplace#new_message"
 
-  post 'hide/:topic_id', to: 'admin#hide_topic'
-  post 'show/:topic_id', to: 'admin#show_topic'
+  post '/section/:id/hide/:topic_id', to: 'admin#hide_topic'
+  post '/section/:id/show/:topic_id', to: 'admin#show_topic'
+  post '/section/:id/delete/:topic_id', to: 'admin#delete_topic'
+  post '/section/:id/restore/:topic_id', to: 'admin#restore_topic'
+
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
