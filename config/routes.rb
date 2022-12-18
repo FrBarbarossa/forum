@@ -43,6 +43,8 @@ Rails.application.routes.draw do
   post "/section/:id/topic/:topic_id/like_msg/:msg_id", to: 'workplace#like_msg'
   post "/section/:id/topic/:topic_id/unlike_msg/:msg_id", to: 'workplace#unlike_msg'
 
+  post "/info/:account_id", to: 'users#short_info'
+
 
 
 

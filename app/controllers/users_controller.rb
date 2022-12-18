@@ -82,6 +82,10 @@ class UsersController < ApplicationController
       @account = current_user.account
     end  
 
+    def short_info
+      @acc = Account.find_by(id: params[:account_id])
+    end
+
     private
 
     def register_params

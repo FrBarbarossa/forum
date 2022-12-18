@@ -18,6 +18,24 @@
                 <%= input.account.name %>
             </div>
         </div>
+        <div class="row w-auto">
+            <div class='col text-center'>
+                <%= form_with url: "/info/#{input.account.id}", method: :post do |form| %>
+                    
+                    <button class="btn btn-primary" type="submit" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">?</button>
+                <% end %>
+
+
+                <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Информация о пользователе</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+                </div>
+                <div class="offcanvas-body" id='offcanvas-body'>
+                </div>
+                </div>
+            </div>
+        </div>
         
 
     </div>
