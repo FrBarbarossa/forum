@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_17_170036) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_134409) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,6 +63,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_170036) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "chapters", force: :cascade do |t|
+    t.string "title"
+    t.string "status", default: "opened"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "likes", force: :cascade do |t|
     t.bigint "message_id"
     t.bigint "account_id"
@@ -93,6 +100,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_170036) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "chapter_id", default: 1
+    t.index ["chapter_id"], name: "index_sections_on_chapter_id"
   end
 
   create_table "topics", force: :cascade do |t|
