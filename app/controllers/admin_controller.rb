@@ -127,7 +127,6 @@ class AdminController < ApplicationController
   end
 
   def find_pretender
-    p 
     @pretenders = Account.eager_load(:user, :moderations).where("users.login LIKE ?", "%" + params[:name] + "%").in_order_of(:role, PRETENDERS_PRIORITY)
     render 'open_pretenders'
   end
