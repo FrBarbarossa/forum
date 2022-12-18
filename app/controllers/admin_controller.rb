@@ -2,13 +2,11 @@
 
 # Class for admin's tools
 class AdminController < ApplicationController
-  before_action :section_moderation_check, except: %i[new_section create_section hide_section
-                                                      show_section delete_section restore_section]
-  before_action :topic_visibility_check, except: %i[new_section create_section hide_section
-                                                    show_section delete_section restore_section]
-  before_action :admin_only,
-                only: %i[delete_topic restore_topic delete_msg restore_msg new_section create_section hide_section
-                         show_section delete_section restore_section]
+  include AdminHelper
+
+  before_action :section_moderation_check, except: EXCEPTING
+  before_action :topic_visibility_check, except: EXCEPTING
+  before_action :admin_only, only: ADMINS_ONLY
 
   def hide_topic
     topic = Topic.find_by(id: params[:topic_id])
@@ -110,16 +108,27 @@ class AdminController < ApplicationController
     section.moderations.update_all(disabled: false)
   end
 
-  private
-
-  def appoint_moderators_for_hidden_chapter(section_id, chapter_id)
-    return if Chapter.find_by(id: chapter_id).status != 'hidden'
-    @sect = Section.find_by(id: section_id)
-    Account.where(role: "Moderator").each{|moder| @sect.moderations.create(account_id: moder.id)}
+  def open_pretenders
+    @pretenders = Account.eager_load(:user, :moderations).all.in_order_of(:role, PRETENDERS_PRIORITY)
   end
 
-  def status_updater(model_object, status)
-    model_object.update(status:)
-    redirect_to request.referrer
+  def make_moder
+    @account = Account.find_by(id: params[:account_id])
+    @account.moderations.create(account_id: params[:account_id], section_id: params[:section_id])
+    newbie @account
+    render 'open_pretenders'
+  end
+
+  def dismiss_moder
+    @account = Account.eager_load(:moderations).find_by(id: params[:account_id])
+    @account.moderations.find_by(section_id: params[:section_id]).destroy
+    fired @account
+    render 'open_pretenders'
+  end
+
+  def find_pretender
+    p 
+    @pretenders = Account.eager_load(:user, :moderations).where("users.login LIKE ?", "%" + params[:name] + "%").in_order_of(:role, PRETENDERS_PRIORITY)
+    render 'open_pretenders'
   end
 end

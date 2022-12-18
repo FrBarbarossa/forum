@@ -46,6 +46,14 @@
                                 <% end %>
                             <% end %>
                         </div>
+
+                        <div class='col-auto'>
+                                <%= form_with url: "/open_pretenders/#{input.id}", method: :post do |form| %>
+                                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    Назначения
+                                    </button>
+                                <% end %>
+                        </div>
                     <% end %>
                 </div>
             </div>
@@ -77,4 +85,37 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<!-- Модальное окно -->
+<div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Заголовок модального окна</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+            <div class='row w-auto'>
+                <%= form_with url: "section/#{input.id}/find_pretender", class: "d-flex" do |form| %>
+                    <div class='col'>
+                        <%= form.text_field :name, maxlength: 15, class: 'form-control' %>
+                    </div>
+                    <div class='col-auto ps-2'>
+                        <p><%= form.submit("найти", class: "btn btn-success form-control", id: 'btn') %></p>
+                    </div>
+                <% end %>
+            </div>
+        <div class="container" id='pretenders'>
+           <p>!!!</p> 
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
 </div>

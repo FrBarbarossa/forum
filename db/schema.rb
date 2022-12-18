@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_18_172607) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_213409) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,10 +89,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_172607) do
     t.index ["topic_id"], name: "index_messages_on_topic_id"
   end
 
-  create_table "moderations", id: false, force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.bigint "section_id", null: false
+  create_table "moderations", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "section_id"
     t.boolean "disabled", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_moderations_on_account_id"
+    t.index ["section_id"], name: "index_moderations_on_section_id"
   end
 
   create_table "sections", force: :cascade do |t|

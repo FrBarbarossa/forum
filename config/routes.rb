@@ -53,7 +53,10 @@ Rails.application.routes.draw do
   post "/delete/:section_id", to: 'admin#delete_section'
   post "/restore/:section_id", to: 'admin#restore_section'
 
-
+  post "/open_pretenders/:section_id", to: 'admin#open_pretenders'
+  post "/make_moder/:section_id/:account_id", to: 'admin#make_moder'
+  post "/dismiss_moder/:section_id/:account_id", to: 'admin#dismiss_moder'
+  post "section/:section_id/find_pretender", to: "admin#find_pretender"
 
 
 
