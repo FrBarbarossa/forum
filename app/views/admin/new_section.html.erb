@@ -1,0 +1,10 @@
+<div id='out'></div>
+<h1>Создать секцию в "<%= Chapter.find_by(id: params[:chapter_id]).title %>"</h1>
+<%= form_with url: "/create_section/#{params[:chapter_id]}", method: :post do |form| %>  
+  <%= form.text_field :title, placeholder: 'Название секции', class: 'form-control', id: 'name' %>
+  <br/>
+  <%= form.text_area :content, placeholder: 'Описание(необязательно)', class: 'form-control' %>
+  <br/>
+  <%= form.submit("Создать", class: 'form-control btn btn-primary', id: 'btn') %>
+  
+<% end %>

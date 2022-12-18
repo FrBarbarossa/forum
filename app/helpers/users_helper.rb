@@ -65,14 +65,14 @@ module UsersHelper
 
   def section_moderation_check(sec = Section.eager_load(:moderations).where(id: params[:id]))
     account = session[:user_id] ? current_account : NOBODY
-    statement = (account.role == 'Admin') || !sec.first.moderations.where(account_id: account.id).empty?
+    statement = (account.role == 'Admin') || !sec.first.moderations.where(account_id: account.id).where(disabled: false).empty?
     redirect_to '/', notice: NOT_EXIST_MSG unless statement
     statement
   end
 
   def section_moderation_check_without_redirection(sec = Section.eager_load(:moderations).where(id: params[:id]))
     account = session[:user_id] ? current_account : NOBODY
-    statement = (account.role == 'Admin') || !sec.first.moderations.where(account_id: account.id).empty?
+    statement = (account.role == 'Admin') || !sec.first.moderations.where(account_id: account.id).where(disabled: false).empty?
     statement
   end
   

@@ -43,7 +43,7 @@
 
     </div>
     
-    <div class="col-2 p-2 text-muted">
+    <div class="col-2 p-2 text-muted pe-3">
             <div class="row justify-content-between">
                 <div class="col-auto">
                     <p>Просмотрено: </p>
@@ -73,7 +73,7 @@
                     <%= input.messages.last.account.created_at %>
                 </div>
             </div>
-            <div class="row justify-content-end">
+            <div class="row justify-content-end mt-1">
                 <div class='col-auto'>
                     <% if @hidder && input.status != "hidden" %>
                         <%= form_with url: "/section/#{params[:id]}/hide/#{input.id}", method: :post do |form| %>

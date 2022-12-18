@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_18_134409) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_172607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,6 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_134409) do
   create_table "moderations", id: false, force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "section_id", null: false
+    t.boolean "disabled", default: false
   end
 
   create_table "sections", force: :cascade do |t|

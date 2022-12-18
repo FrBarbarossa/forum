@@ -12,9 +12,9 @@ class Account < ApplicationRecord
       message: "не может быть длиннее 200 символов"}
 
     validates :name, length: {
-      maximum: 20,
+      maximum: 15,
       minimum: 4,
-      too_long: "не может быть длиннее 20 символов",
+      too_long: "не может быть длиннее 15 символов",
       too_short: "не может быть короче 4 символов"
     }
 

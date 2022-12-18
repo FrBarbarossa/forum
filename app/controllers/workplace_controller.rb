@@ -5,11 +5,12 @@ class WorkplaceController < ApplicationController
   include WorkplaceHelper
 
   before_action :logged_only, only: %i[create_topic new_topic new_message]
-  before_action :section_access_check, only: %i[section topic create_topic new_message]
-  before_action :topic_access_check, only: %i[topic new_message]
+  before_action :section_access_check, only: %i[section topic create_topic new_message new_topic like_msg unlike_msg]
+  before_action :topic_access_check, only: %i[topic new_message like_msg unlike_msg]
 
   def mainpage
-    @p_sections = Section.eager_load({ topics: [:messages] }).where(status: 'opened')
+    @p_sections = Chapter.eager_load(sections: { topics: [:messages] }).in_order_of(:status, CHAPTERS_PRIORITY)
+                         .order('sections.created_at')
   end
 
   def section

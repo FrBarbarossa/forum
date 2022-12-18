@@ -45,6 +45,16 @@ Rails.application.routes.draw do
 
   post "/info/:account_id", to: 'users#short_info'
 
+  get "/new_section/:chapter_id", to: 'admin#new_section'
+  post "/create_section/:chapter_id", to: 'admin#create_section'
+
+  post "/hide/:section_id", to: 'admin#hide_section'
+  post "/show/:section_id", to: 'admin#show_section'
+  post "/delete/:section_id", to: 'admin#delete_section'
+  post "/restore/:section_id", to: 'admin#restore_section'
+
+
+
 
 
 
