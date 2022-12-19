@@ -17,7 +17,8 @@ class WorkplaceController < ApplicationController
   def section
     @c_section = Topic.eager_load({ messages: [:account] },
                                   :account).where(section_id: params[:id]).in_order_of(:priority, SORT_PRIORITY)
-                      .order('messages.created_at DESC')
+                      .order('messages.created_at DESC').page(params[:page])
+    p @c_section.total_pages
   end
 
   def new_topic
@@ -41,7 +42,7 @@ class WorkplaceController < ApplicationController
     return unless @message.valid?
 
     @topic.save
-    redirect_to "/section/#{params[:id]}" # Переделать на созданный топик
+    redirect_to "/section/#{params[:id]}/topic/#{@topic.id}"
   end
 
   def topic
@@ -72,6 +73,5 @@ class WorkplaceController < ApplicationController
     View.create!({ account_id: current_account.id, topic_id: params[:topic_id] }) if session[:user_id] && statement
   end
 
-  def new_chapter
-  end
+  def new_chapter; end
 end

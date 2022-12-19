@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post "/name", to: 'users#name'
   post "/description", to: 'users#description'
 
-  get "/section/:id", to: 'workplace#section'
+  get "/section/:id/page/:page", to: 'workplace#section'
   get "/section/:id/new_topic", to: 'workplace#new_topic'
   get "/section/:id/new_topic", to: 'workplace#new_topic'
   get "/section/:id/topic/:topic_id", to: 'workplace#topic'
