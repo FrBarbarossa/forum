@@ -44,7 +44,13 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        
+        <% if session[:role] == 'Admin' %>
+          <%= form_with url: "/moderators", method: :post do |form| %>
+            <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              Модераторы
+            </button>
+          <% end %>
+        <% end %>
       </ul>
       <% if !logged_in? %>
           <%= form_with class: "d-flex m-3", url: "/login", method: :get do |form| %>
@@ -73,8 +79,6 @@
   </div>
 </nav>
 
-
-
   <div class="container">
   
   <div class="row">
@@ -93,5 +97,18 @@
 
   </div>
 </div>
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content" id="m-body">
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   </body>
 </html>

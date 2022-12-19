@@ -1,0 +1,46 @@
+<div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Модераторы</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+</div>
+<div class="modal-body">
+        
+
+    <div class="container">
+
+        <div class="container" id='pretenders'>
+            <div class="row">
+                <div class="col">
+                    <h5>Логин</h5>
+                </div>
+                <div class="col">
+                    <h5>Никнейм</h5>
+                </div>
+                <div class="col">
+                    <h5>Роль</h5>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+    <% @pretenders.each do |pret|%>
+            <div class='row'>
+            <div class='col'>
+                <p><%= pret.user.login %></p>
+            </div>
+            <div class='col'>
+                <p><%= pret.name %></p>
+            </div>
+            <div class='col'>
+                <p><%= pret.role %></p>
+            </div>
+            <div class='col'>
+                    <%= form_with url: "/fire_moder/#{pret.id}", method: :post do |form| %>
+                        <%= form.submit("Уволить", class: "btn btn-danger", id: 'btn') %>
+                    <% end %>
+            </div>
+        </div>
+    <% end %>
+    </div>
+    </div>
+</div>
+
+

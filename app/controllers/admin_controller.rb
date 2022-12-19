@@ -127,7 +127,21 @@ class AdminController < ApplicationController
   end
 
   def find_pretender
-    @pretenders = Account.eager_load(:user, :moderations).where("users.login LIKE ?", "%" + params[:name] + "%").in_order_of(:role, PRETENDERS_PRIORITY)
+    @pretenders = Account.eager_load(:user, :moderations).where('users.login LIKE ?', "%#{params[:name]}%")
+                         .or(Account.eager_load(:user, :moderations).where('name LIKE ?', "%#{params[:name]}%"))
+                         .in_order_of(:role, PRETENDERS_PRIORITY)
+    render 'open_pretenders'
+  end
+
+  def find_moderators
+    @pretenders = Account.eager_load(:user, :moderations).where(role: 'Moderator')
+    render 'open_pretenders'
+  end
+
+  def fire_moder
+    Account.find_by(id: params[:account_id]).moderations.delete_all
+    @pretenders = Account.eager_load(:user, :moderations).where(role: 'Moderator')
+    fired Account.find_by(id: params[:account_id])
     render 'open_pretenders'
   end
 end

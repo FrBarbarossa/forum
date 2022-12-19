@@ -57,7 +57,8 @@ Rails.application.routes.draw do
   post "/make_moder/:section_id/:account_id", to: 'admin#make_moder'
   post "/dismiss_moder/:section_id/:account_id", to: 'admin#dismiss_moder'
   post "section/:section_id/find_pretender", to: "admin#find_pretender"
-
+  post "/moderators", to: 'admin#find_moderators'
+  post "/fire_moder/:account_id", to: 'admin#fire_moder'
 
 
 
