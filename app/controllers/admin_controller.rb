@@ -144,4 +144,12 @@ class AdminController < ApplicationController
     fired Account.find_by(id: params[:account_id])
     render 'open_pretenders'
   end
+
+  def create_chapter
+    @chapter = Chapter.new(title: params[:title])
+    return unless @chapter.valid?
+
+    @chapter.save
+    redirect_to '/'
+  end
 end

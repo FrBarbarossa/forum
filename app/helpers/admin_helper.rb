@@ -1,9 +1,9 @@
 module AdminHelper
     PRETENDERS_PRIORITY = ["Moderator", "User", "Admin"]
     ADMINS_ONLY = %i[delete_topic restore_topic delete_msg restore_msg new_section create_section hide_section
-        show_section delete_section restore_section open_pretenders dismiss_moder make_moder find_pretender find_moderators fire_moder]
+        show_section delete_section restore_section open_pretenders dismiss_moder make_moder find_pretender find_moderators fire_moder create_chapter]
     EXCEPTING = %i[new_section create_section hide_section
-        show_section delete_section restore_section open_pretenders dismiss_moder make_moder find_pretender find_moderators fire_moder]
+        show_section delete_section restore_section open_pretenders dismiss_moder make_moder find_pretender find_moderators fire_moder create_chapter]
 
   def appoint_moderators_for_hidden_chapter(section_id, chapter_id)
     return if Chapter.find_by(id: chapter_id).status != 'hidden'

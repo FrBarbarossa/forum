@@ -60,12 +60,7 @@ Rails.application.routes.draw do
   post "/moderators", to: 'admin#find_moderators'
   post "/fire_moder/:account_id", to: 'admin#fire_moder'
 
+  get "/new_chapter", to: "workplace#new_chapter"
+  post "/create_chapter", to: "admin#create_chapter"
 
-
-
-
-
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  # Defines the root path route ("/")
-  # root "articles#index"
 end

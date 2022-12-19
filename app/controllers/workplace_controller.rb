@@ -7,6 +7,7 @@ class WorkplaceController < ApplicationController
   before_action :logged_only, only: %i[create_topic new_topic new_message]
   before_action :section_access_check, only: %i[section topic create_topic new_message new_topic like_msg unlike_msg]
   before_action :topic_access_check, only: %i[topic new_message like_msg unlike_msg]
+  before_action :admin_only, only: :new_chapter
 
   def mainpage
     @p_sections = Chapter.eager_load(sections: { topics: [:messages] }).in_order_of(:status, CHAPTERS_PRIORITY)
@@ -69,5 +70,8 @@ class WorkplaceController < ApplicationController
 
     statement = View.where(topic_id: params[:topic_id]).where(account_id: current_account.id).empty?
     View.create!({ account_id: current_account.id, topic_id: params[:topic_id] }) if session[:user_id] && statement
+  end
+
+  def new_chapter
   end
 end
