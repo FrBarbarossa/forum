@@ -39,6 +39,8 @@ ru:
           attributes:
             messages:
               invalid: "Сообщение некорректно"
+      messages:
+        record_invalid: "Сообщение не валидно"
 
   ui:
     close: "Закрыть"
