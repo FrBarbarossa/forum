@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
+# Some methods for admin controller
 module AdminHelper
-    PRETENDERS_PRIORITY = ["Moderator", "User", "Admin"]
-    ADMINS_ONLY = %i[delete_topic restore_topic delete_msg restore_msg new_section create_section hide_section
-        show_section delete_section restore_section open_pretenders dismiss_moder make_moder find_pretender find_moderators fire_moder create_chapter]
-    EXCEPTING = %i[new_section create_section hide_section
-        show_section delete_section restore_section open_pretenders dismiss_moder make_moder find_pretender find_moderators fire_moder create_chapter]
+  PRETENDERS_PRIORITY = %w[Moderator User Admin].freeze
+  ADMINS_ONLY = %i[delete_topic restore_topic delete_msg restore_msg new_section create_section hide_section
+                   show_section delete_section restore_section open_pretenders dismiss_moder make_moder find_pretender find_moderators fire_moder create_chapter].freeze
+  EXCEPTING = %i[new_section create_section hide_section
+                 show_section delete_section restore_section open_pretenders dismiss_moder make_moder find_pretender find_moderators fire_moder create_chapter].freeze
 
   def appoint_moderators_for_hidden_chapter(section_id, chapter_id)
     return if Chapter.find_by(id: chapter_id).status != 'hidden'
@@ -30,7 +33,7 @@ module AdminHelper
   end
 
   def fired(account)
-    return if account.moderations.size > Chapter.find_by(status: "hidden").sections.size + 1
+    return if account.moderations.size > Chapter.find_by(status: 'hidden').sections.size + 1
 
     account.update(role: 'User')
     account.moderations.destroy_all

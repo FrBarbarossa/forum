@@ -48,7 +48,7 @@ module UsersHelper
   end
 
   def admin_only
-    redirect_to '/', notice: "У вас недостаточно прав для совершения этого действия" unless session[:role] == "Admin"
+    redirect_to '/', notice: 'У вас недостаточно прав для совершения этого действия' unless session[:role] == 'Admin'
   end
 
   def section_exist_check(sec)
@@ -72,14 +72,12 @@ module UsersHelper
 
   def section_moderation_check_without_redirection(sec = Section.eager_load(:moderations).where(id: params[:id]))
     account = session[:user_id] ? current_account : NOBODY
-    statement = (account.role == 'Admin') || !sec.first.moderations.where(account_id: account.id).where(disabled: false).empty?
-    statement
+    (account.role == 'Admin') || !sec.first.moderations.where(account_id: account.id).where(disabled: false).empty?
   end
-  
+
   def topic_visibility_check_without_redirection(top = Topic.where(id: params[:topic_id]))
     account = session[:user_id] ? session[:role] : 'nobody'
-    statement = ACCESS[top.first.status].include?(account)
-    statement
+    ACCESS[top.first.status].include?(account)
   end
 
   def section_access_check
