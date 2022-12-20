@@ -1,0 +1,44 @@
+ru:
+  hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
+        login: "Логин"
+        email: "E-mail:"
+        password:
+            one:   "Пароль"
+      account:
+        name: "Имя пользователя"
+        avatar: "Аватар пользователя"
+        description: "Статус пользователя"
+      
+      section:
+        title: "Название секции"
+      
+      topic:
+        messages: ''
+        title: "Название топика"
+
+      chapter:
+        title: "Название раздела"
+      
+      message:
+        content: "Сообщение"
+    
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              blank: "не может быть пустым"
+            password_confirmation:
+              confirmation: "не совпадает с паролем"
+        topic:
+          attributes:
+            messages:
+              invalid: "Сообщение некорректно"
+
+  ui:
+    close: "Закрыть"

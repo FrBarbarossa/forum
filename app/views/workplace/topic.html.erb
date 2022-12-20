@@ -13,7 +13,7 @@
     <% end %>
 </div>
 
-<% if session[:user_id] && !@messages.last.topic.closed || @hidder%>
+<% if (session[:user_id] && !@messages.last.topic.closed && current_account.status != "Banned") || @hidder%>
     <div class="container overflow-hidden d-grid gap-2 p-5">
     <div id='msg_error'> </div>
         <%= form_with url: request.original_url+"/new_message", method: :post do |form| %>

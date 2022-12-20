@@ -17,7 +17,7 @@ class WorkplaceController < ApplicationController
   def section
     @c_section = Topic.eager_load({ messages: [:account] },
                                   :account).where(section_id: params[:id]).in_order_of(:priority, SORT_PRIORITY)
-                      .order('messages.created_at DESC').page(params[:page])
+                      .order('messages.created_at DESC').page(params[:page].to_i)
     p @c_section.total_pages
   end
 

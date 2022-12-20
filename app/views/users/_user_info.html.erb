@@ -72,4 +72,20 @@
         </div>
     </div>
 
+    <div class='row justify-content-center'>
+        <% if session[:role] == "Admin" && input.status == "Active" %>
+            <div class='col-auto'>
+                <%= form_with url: "#", method: :post do |form| %>
+                        <%= form.submit("Забанить", class: "btn btn-danger form-control", id: 'btn') %>
+                <% end %>
+            </div>
+            
+    <% elsif session[:role] == "Admin" && input.status == "Banned" %>
+                <div class='col-auto'>
+                    <%= form_with url: "#", method: :post do |form| %>
+                        <%= form.submit("Разбанить", class: "btn btn-success form-control", id: 'btn') %>
+                    <% end %>
+                </div>
+        <% end %>
+    </div>
 </div>
