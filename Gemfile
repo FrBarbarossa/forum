@@ -81,3 +81,6 @@ end
 
 gem 'email_validator'
 gem 'rmagick'
+
+gem 'kaminari'
+gem 'database_cleaner'

@@ -1,0 +1,91 @@
+
+
+<div class='container my-3'>
+    <div class='row justify-content-center'>
+        <div class='col-auto'>
+            <% if input.avatar.attached?%>
+                <%= image_tag input.avatar,  size: "200x200" %>
+            <% else %>
+                <%= image_tag 'avatar_filler.jpg', size: "200x200"%>
+            <% end %>
+        </div>
+    </div>
+    <div class='row justify-content-center'>
+        <div class='col-auto'>
+            <h3 class="pt-3"><%= input.name %></h3>
+        </div>
+    </div>
+    <div class='row justify-content-center'>
+        <div class='col-auto'>
+            <% if input.role == "Moderator" %>
+                <h4 class="bg-warning text-white px-2"><%= input.role %></h4>
+            <% elsif input.role == "Admin" %>
+                <h4 class="bg-danger text-white px-2"><%= input.role %></h4>
+            <% elsif input.role == "User" %>
+                <h4 class="bg-primary text-white px-2"><%= input.role %></h4>
+            <% end %>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-2'>
+            <h6>Статус:</h6>
+        </div>
+        <div class='col'>
+            <p><%= input.description %></p>
+        </div>
+    </div>
+    
+    <div class='row'>
+        <div class='col-2'>
+            <h6>Присоединился:</h6>
+        </div>
+        <div class='col'>
+            <% reg = Date.strptime(input.created_at.to_s, '%Y-%m-%d') %>
+            <p><%= "#{reg.day}/#{reg.month}/#{reg.year}" %></p>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <h6>Сообщений:</h6>
+        </div>
+        <div class='col'>
+            <p><%= input.messages.size %></p>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <h6>Топиков:</h6>
+        </div>
+        <div class='col'>
+            <p><%= input.topics.size %></p>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <h6>Лайков:</h6>
+        </div>
+        <div class='col'>
+            <p><%= input.likes.size %></p>
+        </div>
+    </div>
+
+    <div class='row justify-content-center'>
+        <% if session[:role] == "Admin" && input.status == "Active" %>
+            <div class='col-auto'>
+                <%= form_with url: "#", method: :post do |form| %>
+                        <%= form.submit("Забанить", class: "btn btn-danger form-control", id: 'btn') %>
+                <% end %>
+            </div>
+            
+    <% elsif session[:role] == "Admin" && input.status == "Banned" %>
+                <div class='col-auto'>
+                    <%= form_with url: "#", method: :post do |form| %>
+                        <%= form.submit("Разбанить", class: "btn btn-success form-control", id: 'btn') %>
+                    <% end %>
+                </div>
+        <% end %>
+    </div>
+</div>

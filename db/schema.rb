@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_09_221500) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_213409) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,6 +63,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_221500) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "chapters", force: :cascade do |t|
+    t.string "title"
+    t.string "status", default: "opened"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.bigint "message_id"
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_likes_on_account_id"
+    t.index ["message_id"], name: "index_likes_on_message_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.string "status", default: "visible"
     t.bigint "account_id"
@@ -73,9 +89,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_221500) do
     t.index ["topic_id"], name: "index_messages_on_topic_id"
   end
 
-  create_table "moderations", id: false, force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.bigint "section_id", null: false
+  create_table "moderations", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "section_id"
+    t.boolean "disabled", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_moderations_on_account_id"
+    t.index ["section_id"], name: "index_moderations_on_section_id"
   end
 
   create_table "sections", force: :cascade do |t|
@@ -84,6 +105,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_221500) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "chapter_id", default: 1
+    t.index ["chapter_id"], name: "index_sections_on_chapter_id"
   end
 
   create_table "topics", force: :cascade do |t|
@@ -94,6 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_221500) do
     t.string "status", default: "opened"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "closed", default: false
     t.index ["account_id"], name: "index_topics_on_account_id"
     t.index ["section_id"], name: "index_topics_on_section_id"
   end
@@ -104,6 +128,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_221500) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "views", force: :cascade do |t|
+    t.bigint "topic_id"
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_views_on_account_id"
+    t.index ["topic_id"], name: "index_views_on_topic_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

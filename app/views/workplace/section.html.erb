@@ -1,7 +1,10 @@
+<% @hidder = section_moderation_check_without_redirection %>
+<% @deleter = session[:role] == 'Admin'%>
+
 <h1><%= Section.find_by(id: params[:id]).title %></h1>
 
 <% if session[:user_id] %>
-    <%= form_with url: request.original_url+"/new_topic", method: :get do |form| %>
+    <%= form_with url: "/section/#{params[:id]}/new_topic", method: :get do |form| %>
         <p><%= form.submit("Новый топик", class: "btn btn-primary form-control", id: 'btn') %></p>
     <% end %>
 <% else %>
@@ -10,8 +13,47 @@
 
   <div class="container overflow-hidden d-grid gap-2">
     <% @c_section.each do |i| %>
-        <% if i.status == "opened" %>
+        <% if i.status == "opened"  || @hidder && i.status != "deleted" %>
+            <%= render partial: 'topic_part', locals: {input: i} %>
+
+        <%end%> 
+        <% if i.status == "deleted" && @deleter%>
             <%= render partial: 'topic_part', locals: {input: i} %>
         <%end%> 
     <%end%>
+<div class="row">
+    <% cur_sec = "/section/#{params[:id]}/page/" %>
+    <nav aria-label="...">
+    <ul class="pagination justify-content-center">
+        <% if @c_section.current_page == 1%>
+            <li class="page-item disabled">
+                <a class="page-link">Предыдущая</a>
+            </li>
+        <% else %>
+            <li class="page-item">
+                <a class="page-link" href=<%= cur_sec + "#{@c_section.prev_page}"%>>Предыдущая</a>
+            </li>
+        <% end %>
+        <% (1..@c_section.total_pages).each do |num| %>
+            <% if num == params[:page].to_i %>
+                <li class="page-item active" aria-current="page">
+            <% else %>
+                <li class="page-item">
+            <% end %>
+            <a class="page-link" href=<%= cur_sec + "#{num}"%>><%= num %></a>
+            </li>
+        <% end %>
+
+        <% if @c_section.next_page.nil?%>
+            <li class="page-item disabled">
+                <a class="page-link">Следующая</a>
+            </li>
+        <% else %>
+            <li class="page-item">
+                    <a class="page-link" href=<%= cur_sec + "#{@c_section.next_page}"%>>Следующая</a>
+            </li>
+        <% end %>
+    </ul>
+    </nav>
+</div>
   </div>

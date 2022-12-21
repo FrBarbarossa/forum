@@ -4,16 +4,16 @@ class Account < ApplicationRecord
     has_many :topics
     has_many :messages
     has_many :moderations
-    # Добавить связи для новых таблиц лайков и просмотров
+    has_many :likes
 
     validates :description, length: {
       maximum: 200, 
       message: "не может быть длиннее 200 символов"}
 
     validates :name, length: {
-      maximum: 20,
+      maximum: 15,
       minimum: 4,
-      too_long: "не может быть длиннее 20 символов",
+      too_long: "не может быть длиннее 15 символов",
       too_short: "не может быть короче 4 символов"
     }
 

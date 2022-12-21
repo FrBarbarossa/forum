@@ -31,3 +31,10 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
+  ui:
+    close: "Закрыть"

@@ -1,12 +1,62 @@
-<div class="row" style="border:1px solid #cecece;">
+<% if input.status == "hidden" %>
+    <div class="row bg-warning bg-opacity-50 mb-2" style="border:1px solid #cecece;">
+<% elsif input.status == "deleted" %>
+    <div class="row bg-danger text-dark bg-opacity-50 mb-2" style="border:1px solid #cecece;">
+<% else %>
+    <div class="row mb-2" style="border:1px solid #cecece;">
+<% end %>
+
     <div class="col-auto">
         <%= image_tag 'debate', size: "40x40" %>
     </div>
     <div class="col">
-        <div class='row'>
-            <h4><a class="link-dark" href=<%= "/section/#{input.id}" %> style="text-decoration:none;" >
-                <%= input.title %>
-            </a></h4>
+        <div class='row justify-content-between'>
+            <div class='col-auto'>
+                <h4><a class="link-dark" href=<%= "/section/#{input.id}/page/1" %> style="text-decoration:none;" >
+                    <%= input.title %>
+                </a></h4>
+            </div>
+            <div class='col-auto'>
+                <div class='row mt-2'>
+                    <% if session[:role] == 'Admin'%>
+                        <div class='col-auto'>
+                            <% if input.status != "hidden" %>
+                                <%= form_with url: "/hide/#{input.id}", method: :post do |form| %>
+                                    <%= form.submit("Скрыть", class: "btn btn-warning", id: 'btn') %>
+                                <% end %>
+                            <% end %>
+
+                            <% if input.status == "hidden" %>
+                                <%= form_with url: "/show/#{input.id}", method: :post do |form| %>
+                                    <%= form.submit("Показать", class: "btn btn-success", id: 'btn') %>
+                                <% end %>
+                            <% end %>
+                        </div>
+                        <div class='col-auto'>
+
+                            <% if input.status != "deleted" %>
+                                <%= form_with url: "/delete/#{input.id}", method: :post do |form| %>
+                                    <%= form.submit("Удалить", class: "btn btn-warning", id: 'btn') %>
+                                <% end %>
+                            <% end %>
+
+                            <% if input.status == "deleted" %>
+                                <%= form_with url: "/restore/#{input.id}", method: :post do |form| %>
+                                    <%= form.submit("Восстановить", class: "btn bg-info text-dark bg-opacity-50", id: 'btn') %>
+                                <% end %>
+                            <% end %>
+                        </div>
+
+                        <div class='col-auto'>
+                                <%= form_with url: "/open_pretenders/#{input.id}", method: :post do |form| %>
+                                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    Назначения
+                                    </button>
+                                <% end %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
         </div>
         <div class='row'>
             <div class="col-auto">
@@ -36,4 +86,3 @@
         </div>
     </div>
 </div>
-

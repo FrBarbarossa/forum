@@ -1,8 +1,28 @@
-<div class="container" style="border:2px solid #cecece;">
-  <div class="row alert alert-info"><h3 class='text-center'>Основной раздел</h3></div>
-  <div class="container overflow-hidden d-grid gap-4">
-    <% @p_sections.each do |i| %>
-        <%= render partial: 'section_part', locals: {input: i} %> 
-    <%end%>
-  </div>
-</div>
+<% if session[:role] == "Admin"%>
+  <%= form_with url: "/new_chapter", method: :get do |form| %>
+    <p><%= form.submit("Новый раздел", class: "btn btn-success form-control mt-4", id: 'btn') %></p>
+  <% end %>
+<% end %>
+
+<% for chapter in @p_sections %>
+  <% if chapter.status == "opened" || (chapter.status =="hidden" && session[:role] == "Moderator") || session[:role] == 'Admin'%>
+    <div class="container mt-3" style="border:2px solid #cecece;">
+      <div class="row alert alert-info"><h3 class='text-center'><%= chapter.title %></h3></div>
+      
+      <% if session[:role] == "Admin"%>
+        <%= form_with url: "/new_section/#{chapter.id}", method: :get do |form| %>
+          <p><%= form.submit("Новая секция", class: "btn btn-primary form-control", id: 'btn') %></p>
+        <% end %>
+      <% end %>
+      
+      <div class="container overflow-hidden d-grid gap-2">
+        <% chapter.sections.each do |i| %>
+            <% if i.status == "opened" || (i.status =="hidden" && session[:role] == "Moderator") || session[:role] == 'Admin'%>
+              <%= render partial: 'section_part', locals: {input: i} %> 
+            <% end %>
+        <%end%>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+

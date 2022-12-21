@@ -38,13 +38,24 @@
     </head>
 
   <body>
-      <nav class="navbar navbar-expand-lg bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Snaky</a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        
+        <% if session[:role] == 'Admin' %>
+          <%= form_with url: "/moderators", method: :post do |form| %>
+            <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              Модераторы
+            </button>
+          <% end %>
+        <% end %>
+      </ul>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Компилятор
+        </button>
       </ul>
       <% if !logged_in? %>
           <%= form_with class: "d-flex m-3", url: "/login", method: :get do |form| %>
@@ -73,8 +84,6 @@
   </div>
 </nav>
 
-
-
   <div class="container">
   
   <div class="row">
@@ -93,5 +102,46 @@
 
   </div>
 </div>
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content" id="m-body">
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Карманный компилятор</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        <iframe
+          frameBorder="0"
+          height="450px"  
+          hideNewFileOption=true
+          hideNew=true
+          hideLanguageSelection=true
+          theme=dark
+          listenToEvents=true	
+          src="https://onecompiler.com/embed/python" 
+          width="100%"
+          ></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   </body>
 </html>

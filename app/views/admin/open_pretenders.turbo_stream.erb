@@ -1,0 +1,8 @@
+<% if @pretenders.nil? %>
+    <% @pretenders = Account.eager_load(:user, :moderations).all.in_order_of(:role, ["Moderator", "User", "Admin"]) %>
+<% end %>
+<% if params[:section_id].nil? %>
+    <%= turbo_stream.update 'm-body', partial: 'moderators_list' %>
+<% else %>
+    <%= turbo_stream.update 'm-body', partial: 'pretenders_list' %>
+<% end %>

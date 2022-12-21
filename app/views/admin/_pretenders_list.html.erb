@@ -1,0 +1,66 @@
+<div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Назначить модератора</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+</div>
+<div class="modal-body">
+        
+
+    <div class="container">
+                <div class='row w-auto'>
+                    <%= form_with url: "section/#{params[:section_id]}/find_pretender", class: "d-flex" do |form| %>
+                        <div class='col'>
+                            <%= form.text_field :name, maxlength: 15, class: 'form-control' %>
+                        </div>
+                        <div class='col-auto ps-2'>
+                            <p><%= form.submit("найти", class: "btn btn-success form-control", id: 'btn') %></p>
+                        </div>
+                    <% end %>
+                </div>
+        <div class="container" id='pretenders'>
+            <div class="row">
+                <div class="col">
+                    <h5>Логин</h5>
+                </div>
+                <div class="col">
+                    <h5>Никнейм</h5>
+                </div>
+                <div class="col">
+                    <h5>Роль</h5>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+    <% @pretenders.each do |pret|%>
+        <% cur_modder = !pret.moderations.find_by(section_id: params[:section_id]).nil? %>
+        <% if pret.role == "Moderator" && cur_modder  %>
+            <div class="row bg-warning bg-opacity-50 mb-2" style="border:1px solid #cecece;">
+        <% else %>    
+            <div class='row'>
+        <% end %>
+            <div class='col'>
+                <p><%= pret.user.login %></p>
+            </div>
+            <div class='col'>
+                <p><%= pret.name %></p>
+            </div>
+            <div class='col'>
+                <p><%= pret.role %></p>
+            </div>
+            <div class='col'>
+                <% if !cur_modder %>
+                    <%= form_with url: "/make_moder/#{params[:section_id]}/#{pret.id}", method: :post do |form| %>
+                        <%= form.submit("Назначить", class: "btn btn-success", id: 'btn') %>
+                    <% end %>
+                <% else %>
+                    <%= form_with url: "/dismiss_moder/#{params[:section_id]}/#{pret.id}", method: :post do |form| %>
+                        <%= form.submit("Разжаловать", class: "btn btn-danger", id: 'btn') %>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+    </div>
+    </div>
+</div>
+
+

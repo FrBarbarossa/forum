@@ -1,0 +1,8 @@
+<div id='out'></div>
+<h1>Создать раздел</h1>
+<%= form_with url: "/create_chapter", method: :post do |form| %>  
+  <%= form.text_field :title, placeholder: 'Название раздела', class: 'form-control', id: 'name' %>
+  <br/>
+  <%= form.submit("Создать", class: 'form-control btn btn-primary', id: 'btn') %>
+  
+<% end %>

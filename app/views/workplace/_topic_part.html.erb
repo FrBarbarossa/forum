@@ -1,18 +1,35 @@
-<div class="row" style="border:1px solid #cecece;">
+<% if input.status == "hidden" %>
+    <div class="row bg-warning bg-opacity-50" style="border:1px solid #cecece;">
+<% elsif input.status == "deleted" %>
+    <div class="row bg-danger text-dark bg-opacity-50"" style="border:1px solid #cecece;">
+<% else %>
+    <div class="row" style="border:1px solid #cecece;">
+<% end %>
     <div class="col-auto p-3" >
-        <%= image_tag input.account.avatar, class: "circular_image mx-auto"%>
+          <% if input.account.avatar.attached? %>
+            <%= image_tag input.account.avatar, class: "circular_image mx-auto"%>
+          <% else %>
+            <%= image_tag 'avatar_filler.jpg', class: "circular_image"%>
+          <%end%>
     </div>
     <div class="col p-2">
         <div class="row">
             <% if input.priority == "important" %>
                 <div class="col-auto">
-                    <h1>ВАЖНО!!!<h1>
+                    <div class='bg-danger p-1 text-white'>Важно</div>
                 </div>
             <% end %>
-            <div class="col">
+            <div class="col-auto">
                 <h5>
                     <a class="link-dark" href=<%= "/section/#{params[:id]}/topic/#{input.id}" %>> <strong><%= input.title %></strong> </a>
                 </h5>
+            </div>
+            <div class='col-auto'>
+                <% if input.closed %>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                    </svg>
+                <% end %>
             </div>
         </div>
         <div class="row">
@@ -26,26 +43,26 @@
 
     </div>
     
-    <div class="col-3 p-2 text-muted">
-            <div class="row">
-                <div class="col-4">
+    <div class="col-2 p-2 text-muted pe-3">
+            <div class="row justify-content-between">
+                <div class="col-auto">
                     <p>Просмотрено: </p>
                 </div>
-                <div class="col-auto">
-                    <p>1044</p>
+                <div class="col-auto align-self-end">
+                    <p><%= View.all().where(topic_id: input.id).size %></p>
                 </div>
             </div>
-            <div class="row ">
-                <div class="col-4">
+            <div class="row justify-content-between">
+                <div class="col-auto">
                     <p>Ответов: </p>
                 </div>
-                <div class="col-auto">
+                <div class="col-auto align-self-end">
                     <p><%= input.messages.size %></p>
                 </div>
             </div>
         </div>
 
-    <div class="col-auto p-2">
+    <div class="col-3 p-2">
             <div class="row">
                 <div class="col-auto">
                    <p> Последнее от: <%= input.messages.first.account.name %> </p>
@@ -56,5 +73,58 @@
                     <%= input.messages.last.account.created_at %>
                 </div>
             </div>
+            <div class="row justify-content-end mt-1">
+                <div class='col-auto'>
+                    <% if @hidder && input.status != "hidden" %>
+                        <%= form_with url: "/section/#{params[:id]}/hide/#{input.id}", method: :post do |form| %>
+                            <%= form.submit("Скрыть", class: "btn btn-warning", id: 'btn') %>
+                        <% end %>
+                    <% end %>
+
+                    <% if input.status == "hidden" %>
+                        <%= form_with url: "/section/#{params[:id]}/show/#{input.id}", method: :post do |form| %>
+                            <%= form.submit("Показать", class: "btn btn-success", id: 'btn') %>
+                        <% end %>
+                    <% end %>
+                </div>
+                <div class='col-auto'>
+
+                    <% if @deleter && input.status != "deleted" %>
+                        <%= form_with url: "/section/#{params[:id]}/delete/#{input.id}", method: :post do |form| %>
+                            <%= form.submit("Удалить", class: "btn btn-warning", id: 'btn') %>
+                        <% end %>
+                    <% end %>
+
+                     <% if @deleter && input.status == "deleted" %>
+                        <%= form_with url: "/section/#{params[:id]}/restore/#{input.id}", method: :post do |form| %>
+                            <%= form.submit("Восстановить", class: "btn bg-info text-dark bg-opacity-50", id: 'btn') %>
+                        <% end %>
+                    <% end %>
+                </div>
+            </div>
+            </div>            
+            <div class="row p-1">
+                <div class="col-auto">
+                    <% if @hidder && input.priority == "normal"%>
+                        <%= form_with url: "/section/#{params[:id]}/pin/#{input.id}", method: :post do |form| %>
+                            <%= form.submit("Закрепить", class: "btn btn-primary", id: 'btn') %>
+                        <% end %>               
+                    <% elsif @hidder && input.priority == "important" %>
+                        <%= form_with url: "/section/#{params[:id]}/unpin/#{input.id}", method: :post do |form| %>
+                            <%= form.submit("Открепить", class: "btn bg-info text-dark bg-opacity-50", id: 'btn') %>
+                        <% end %>    
+                    <% end %>     
+                </div>
+                <div class="col-auto">
+                    <% if !input.closed && @hidder %>
+                        <%= form_with url: "/section/#{params[:id]}/close/#{input.id}", method: :post do |form| %>
+                            <%= form.submit("Закрыть", class: "btn bg-secondary text-white bg-opacity-75", id: 'btn') %>
+                        <% end %>
+                    <% elsif input.closed && @hidder%>
+                        <%= form_with url: "/section/#{params[:id]}/open/#{input.id}", method: :post do |form| %>
+                            <%= form.submit("Открыть", class: "btn bg-secondary text-white bg-opacity-75", id: 'btn') %>
+                        <% end %> 
+                    <%end%>
+                </div>
         </div>
 </div>
