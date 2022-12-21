@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Section, type: :model do
-  let (:chapter_data_correct_1) {{ id:1, title: "Test" }}
+  let (:chapter_data_correct_1) {{id: Chapter.all.last.id+1, title: "Test" }}
   let! (:correct_chapter_1) { Chapter.create(chapter_data_correct_1 )}
 
-  let (:chapter_data_correct_2) {{ title: "Test2", status: "hidden"}}
+  let (:chapter_data_correct_2) {{id: Chapter.all.last.id+1, title: "Test2", status: "hidden"}}
   let! (:correct_chapter_2) { Chapter.create(chapter_data_correct_2 )}
 
   let (:section_data_correct_1) {{ title: "Жалобы", status: "opened"}}

@@ -6,8 +6,6 @@ class Account < ApplicationRecord
     has_many :moderations
     has_many :likes
 
-    validates :user_id, presence: { message: "не может быть пустым" }
-
     validates :description, length: {
       maximum: 200, 
       message: "не может быть длиннее 200 символов"}

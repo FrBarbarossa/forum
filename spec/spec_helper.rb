@@ -19,6 +19,9 @@ RSpec.configure do |config|
     a = User.new({ login: "Alex", password: "123", password_confirmation: "123", email: "some@bmstu.com"})
     a.build_account({name: "Alex", role: "Admin", status: "Active" })
     a.save
+    Chapter.create(id: 1, title: "Основной раздел", status: "opened")
+    Chapter.create(id: 2, title: "Модераторский раздел", status: "hidden")
+    Chapter.create(id: 3, title: "Админский раздел", status: "deleted")
   end
   
   config.before(:each) do

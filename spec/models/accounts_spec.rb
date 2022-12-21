@@ -27,10 +27,6 @@ RSpec.describe Account, type: :model do
     expect(incorrect_account.errors.size > 0).to eq(true)
   end
 
-  it "created w/o user_id returns user_id_error" do
-    expect(incorrect_account.errors[:user_id].empty?).to eq(false)
-  end
-
   it "created with wrong name length returns name_error" do
     expect(incorrect_account.errors[:name].empty?).to eq(false)
   end
