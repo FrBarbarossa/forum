@@ -227,7 +227,7 @@ describe 'Logged as user can create comments' do
     @driver.get('http://127.0.0.1:3000/section/1/topic/1')
     Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.overflow-hidden > .row:nth-child(2)') }
   end
-
+end
   describe 'Logged as admin and can hide delete topics' do
     before(:each) do
       @driver = Selenium::WebDriver.for :firefox
@@ -259,5 +259,78 @@ describe 'Logged as user can create comments' do
       Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.bg-danger') }
     end
   end
-   
-end
+
+  describe 'Trying to login and get alert' do
+    before(:each) do
+      @driver = Selenium::WebDriver.for :firefox
+      @vars = {}
+    end
+    after(:each) do
+      @driver.quit
+    end
+    it 'trying to login and geta lert No1' do
+      @driver.get('http://127.0.0.1:3000/')
+      @driver.find_element(:id, 'btn').click
+      @driver.find_element(:id, 'login').click
+      @driver.find_element(:id, 'login').send_keys('Asd')
+      @driver.find_element(:id, 'pass').click
+      @driver.find_element(:id, 'pass').send_keys('223')
+      @driver.find_element(:css, 'p > #btn').click
+      Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.alert') }
+    end
+
+    it 'trying to login and geta lert No2' do
+      @driver.get('http://127.0.0.1:3000/')
+      @driver.find_element(:id, 'btn').click
+      @driver.find_element(:id, 'login').click
+      @driver.find_element(:id, 'login').send_keys('')
+      @driver.find_element(:id, 'pass').click
+      @driver.find_element(:id, 'pass').send_keys('223')
+      @driver.find_element(:css, 'p > #btn').click
+      Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.alert') }
+    end
+
+    it 'trying to login and geta lert No3' do
+      @driver.get('http://127.0.0.1:3000/')
+      @driver.find_element(:id, 'btn').click
+      @driver.find_element(:id, 'login').click
+      @driver.find_element(:id, 'login').send_keys('Asd')
+      @driver.find_element(:id, 'pass').click
+      @driver.find_element(:id, 'pass').send_keys('')
+      @driver.find_element(:css, 'p > #btn').click
+      Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.alert') }
+    end
+
+    it 'trying to login and geta lert No4' do
+      @driver.get('http://127.0.0.1:3000/')
+      @driver.find_element(:id, 'btn').click
+      @driver.find_element(:id, 'login').click
+      @driver.find_element(:id, 'login').send_keys('Alex')
+      @driver.find_element(:id, 'pass').click
+      @driver.find_element(:id, 'pass').send_keys('223')
+      @driver.find_element(:css, 'p > #btn').click
+      Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.alert') }
+    end
+  end
+  
+  describe 'Tryingtoregisterandgetalert' do
+    before(:each) do
+      @driver = Selenium::WebDriver.for :firefox
+      @vars = {}
+    end
+    after(:each) do
+      @driver.quit
+    end
+    it 'tryingtoregisterandgetalert' do
+      @driver.get('http://127.0.0.1:3000/')
+      @driver.find_element(:css, '.d-flex:nth-child(4) > #btn').click
+      @driver.find_element(:id, 'login').click
+      @driver.find_element(:id, 'login').send_keys('ss')
+      @driver.find_element(:id, 'name').click
+      @driver.find_element(:id, 'name').send_keys('sd')
+      @driver.find_element(:id, 'pass').click
+      @driver.find_element(:css, 'p > #btn').click
+      Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.alert') }
+    end
+  end
+  
