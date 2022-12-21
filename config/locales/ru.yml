@@ -10,22 +10,28 @@ ru:
         password:
             one:   "Пароль"
       account:
+        user: 'Логин'
         name: "Имя пользователя"
         avatar: "Аватар пользователя"
         description: "Статус пользователя"
       
       section:
         title: "Название секции"
+        chapter: "ID раздела"
+        status: "Статус"
       
       topic:
         messages: ''
         title: "Название топика"
+        status: 'Статус'
 
       chapter:
         title: "Название раздела"
+        status: "Статус"
       
       message:
         content: "Сообщение"
+        status: ''
     
     errors:
       models:
@@ -39,8 +45,18 @@ ru:
           attributes:
             messages:
               invalid: "Сообщение некорректно"
-      messages:
-        record_invalid: "Сообщение не валидно"
+        account:
+          attributes:
+            user:
+              required: "должен быть привязан к пользователю"
+        messages:
+          record_invalid: "Сообщение не валидно"
+        chapter:
+          status: 'не может быть пустым'
+        section:
+          attributes:
+            chapter:
+              required: "не может быть пустым"
 
   ui:
     close: "Закрыть"

@@ -5,7 +5,8 @@ class Account < ApplicationRecord
     has_many :messages
     has_many :moderations
     has_many :likes
-    # Добавить связи для новых таблиц лайков и просмотров
+
+    validates :user_id, presence: { message: "не может быть пустым" }
 
     validates :description, length: {
       maximum: 200, 

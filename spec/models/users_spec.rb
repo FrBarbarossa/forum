@@ -18,8 +18,6 @@ RSpec.describe User, type: :model do
   let (:incorrect_user_passw) { User.create(user_data_incorrect_passwords) }
   let (:incorrect_user_email) { User.create(user_data_incorrect_email) }
 
-
-
   it "created with wrong data cant create" do
     expect(incorrect_user_1.valid?).to eq(false)
   end
