@@ -5,4 +5,5 @@ class Message < ApplicationRecord
     has_many :likes
 
     validates :content, presence: { message: "не может быть пустым" }
+    validates :status, inclusion: { in: %w(visible hidden deleted), message: "Некорректный статус" }
 end

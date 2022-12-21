@@ -14,7 +14,7 @@ describe 'TestCorrectRegistration' do
   after(:each) do
     @driver.quit
   end
-  it 'testCorrectRegistration' do
+  it 'test Correct Registration' do
     @driver.get('http://127.0.0.1:3000/')
     @driver.find_element(:css, '.d-flex:nth-child(4) > #btn').click
     @driver.find_element(:id, 'login').click
@@ -35,7 +35,7 @@ describe 'TestCorrectRegistration' do
     Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.row > img') }
     Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:id, 'btn') }
   end
-  it 'testCorrectRegistration No.2' do
+  it 'test Correct Registration No.2' do
     @driver.get('http://127.0.0.1:3000/')
     @driver.find_element(:css, '.d-flex:nth-child(4) > #btn').click
     @driver.find_element(:id, 'login').click
@@ -58,7 +58,7 @@ describe 'TestCorrectRegistration' do
   end
 end
 
-describe 'Loggedasadmin' do
+describe 'Logged as admin' do
   before(:each) do
     @driver = Selenium::WebDriver.for :firefox
     @vars = {}
@@ -66,7 +66,7 @@ describe 'Loggedasadmin' do
   after(:each) do
     @driver.quit
   end
-  it 'loggedasadmin' do
+  it 'logged as admin' do
     @driver.get('http://127.0.0.1:3000/')
     @driver.find_element(:id, 'btn').click
     @driver.find_element(:id, 'login').click
@@ -97,7 +97,7 @@ describe 'Loggedasadmin' do
   end
 end
 
-describe 'Loggedasadminandcanhidedeletesections' do
+describe 'Logged as admin and can hide delete sections' do
   before(:each) do
     @driver = Selenium::WebDriver.for :firefox
     @vars = {}
@@ -105,7 +105,7 @@ describe 'Loggedasadminandcanhidedeletesections' do
   after(:each) do
     @driver.quit
   end
-  it 'loggedasadminandcanhidedeletesections' do
+  it 'logged as admin and can hide delete sections' do
     @driver.get('http://127.0.0.1:3000/')
     @driver.find_element(:id, 'btn').click
     @driver.find_element(:id, 'login').click
@@ -131,7 +131,7 @@ describe 'Loggedasadminandcanmakeanddeletemoder' do
   after(:each) do
     @driver.quit
   end
-  it 'loggedasadminandcanmakeanddeletemoder' do
+  it 'logged as admin and can make and delete moder' do
     @driver.get('http://127.0.0.1:3000/')
     @driver.find_element(:id, 'btn').click
     @driver.find_element(:id, 'login').click
@@ -167,7 +167,7 @@ describe 'Loggedasadminandcanmakeanddeletemoder' do
 end
 
 
-describe 'Loggedasuserandcancreatetopic' do
+describe 'Logged as user and can create topic' do
   before(:each) do
     @driver = Selenium::WebDriver.for :firefox
     @vars = {}
@@ -200,7 +200,7 @@ describe 'Loggedasuserandcancreatetopic' do
   end
 end
 
-describe 'Loggedasusercancreatecomments' do
+describe 'Logged as user can create comments' do
   before(:each) do
     @driver = Selenium::WebDriver.for :firefox
     @vars = {}
@@ -227,4 +227,37 @@ describe 'Loggedasusercancreatecomments' do
     @driver.get('http://127.0.0.1:3000/section/1/topic/1')
     Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.overflow-hidden > .row:nth-child(2)') }
   end
+
+  describe 'Logged as admin and can hide delete topics' do
+    before(:each) do
+      @driver = Selenium::WebDriver.for :firefox
+      @vars = {}
+    end
+    after(:each) do
+      @driver.quit
+    end
+    it 'logged as admin and can hide delete topics' do
+      @driver.get('http://127.0.0.1:3000/')
+      @driver.find_element(:id, 'btn').click
+      @driver.find_element(:id, 'login').click
+      @driver.find_element(:id, 'login').send_keys('Alex')
+      @driver.find_element(:id, 'pass').click
+      @driver.find_element(:id, 'pass').send_keys('123')
+      @driver.find_element(:css, 'p > #btn').click
+      @driver.find_element(:link_text, 'Test').click
+      @driver.find_element(:css, '.p-1 > .col-auto:nth-child(2) #btn').click
+      @driver.find_element(:css, '.p-1 > .col-auto:nth-child(2) #btn').click
+      @driver.find_element(:css, '.p-1 > .col-auto:nth-child(1) #btn').click
+      @driver.find_element(:css, '.p-1 > .col-auto:nth-child(1) #btn').click
+      @driver.find_element(:css, '.justify-content-end > .col-auto:nth-child(1) #btn').click
+      @driver.find_element(:css, '.justify-content-end > .col-auto:nth-child(2) #btn').click
+      @driver.find_element(:css, '.justify-content-end > .col-auto:nth-child(2) #btn').click
+      @driver.find_element(:css, '.justify-content-end > .col-auto:nth-child(1) #btn').click
+      @driver.find_element(:css, '.justify-content-end > .col-auto:nth-child(1) #btn').click
+      @driver.find_element(:css, '.justify-content-end > .col-auto:nth-child(2) #btn').click
+      Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.justify-content-end > .col-auto:nth-child(2) #btn') }
+      Selenium::WebDriver::Wait.new(timeout: 30).until { @driver.find_element(:css, '.bg-danger') }
+    end
+  end
+   
 end
